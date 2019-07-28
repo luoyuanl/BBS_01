@@ -1,0 +1,359 @@
+{% extends 'common/Base.html' %}
+{% block head %}
+    {{ super() }}
+    <title>{{ title }}</title>
+{% endblock head %}
+{% block body %}
+<body>
+<!--TOP start-->
+<div id="toptb" class="cl">
+	<div class="wp">
+		<div class="z"><a href="javascript:;" onclick="setHomepage(&#39;http://www.phpxy.com/&#39;)">设为首页</a><a href="javascript:;" onclick="window.external.AddFavorite(location.href,document.title);return false;">收藏本站</a></div>
+	</div>
+</div>
+<script>
+function setHomepage(sURL) {
+
+		document.body.style.behavior = 'url(#default#homepage)';
+		document.body.setHomePage(sURL);
+
+}
+</script><!--TOP end-->
+
+<!--HEAD start-->
+<div id="hd">
+	<div class="wp">
+		<div class="hdc cl">
+			<h2><a href="http://py.codingfans.cc/" title="内核源码 - 10分钟学院"><img src="./内核源码 - 10分钟学院_files/logo.jpg" height="80" border="0"></a></h2>
+											<div id="um">
+					<div class="avt y"><a href="http://py.codingfans.cc/home_tx.php"><img src="./内核源码 - 10分钟学院_files/yh_5d36d64f0c2c8.gif"></a></div>
+					<p>
+					<strong class="vwmy"><a href="http://py.codingfans.cc/home.php" target="_blank">admin</a></strong>
+					<span class="pipe">|</span><a href="http://py.codingfans.cc/home.php">设置</a>
+										<span class="pipe">|</span><a href="http://py.codingfans.cc/admin.php" target="_blank">管理中心</a>
+										<span class="pipe">|</span><a href="http://py.codingfans.cc/logout.php">退出</a>
+					</p>
+					<p>
+					<a id="extcreditmenu" href="http://py.codingfans.cc/list.php?classid=5#">积分: 244</a>
+					<span class="pipe">|</span>用户权限: 管理员					</p>
+				</div>
+									</div>
+
+		<div id="nv">
+			<ul>
+				<li id="mn_forum"><a href="http://py.codingfans.cc/index.php" hidefocus="true" title="10分钟学院">首页</a><span>10分钟学院</span></li>
+								<li class="a" id="mn_home"><a href="http://py.codingfans.cc/index.php?bigid=1" hidefocus="true" title="Space">PHP技术交流</a></li>
+								<li id="mn_home"><a href="http://py.codingfans.cc/index.php?bigid=2" hidefocus="true" title="Space">程序人生</a></li>
+								<li id="mn_home"><a href="http://py.codingfans.cc/index.php?bigid=11" hidefocus="true" title="Space"></a></li>
+								<li id="mn_home"><a href="http://py.codingfans.cc/index.php?bigid=10" hidefocus="true" title="Space"></a></li>
+
+			</ul>
+		</div>
+
+		<div id="scbar" class="cl">
+			<form id="scbar_form" method="get" autocomplete="off" action="http://py.codingfans.cc/search.php" target="_blank">
+			<table cellspacing="0" cellpadding="0">
+				<tbody><tr>
+					<td class="scbar_icon_td"></td>
+					<td class="scbar_txt_td"><input type="text" name="keywords" id="scbar_txt" onfocus="if(this.value==&#39;请输入搜索内容&#39;){this.value=&#39;&#39;;this.style.color=&#39;#666&#39;;}" onblur="if(this.value==&#39;&#39;){this.value=&#39;请输入搜索内容&#39;;this.style.color=&#39;#ccc&#39;;}" value="请输入搜索内容" style="color:#CCCCCC" autocomplete="off"></td>
+					<td class="scbar_btn_td">
+						<button type="submit" name="searchsubmit" id="scbar_btn" class="pn pnc" value="true"><strong class="xi2 xs2">搜索</strong></button>
+					</td>
+					<td class="scbar_hot_td">
+						<div id="scbar_hot">
+							<strong class="xw1">热搜: </strong>
+														<a href="http://py.codingfans.cc/search.php?keywords=%E6%B4%BB%E5%8A%A8" target="_blank" class="xi2">活动</a>
+														<a href="http://py.codingfans.cc/search.php?keywords=%E4%BA%A4%E5%8F%8B" target="_blank" class="xi2">交友</a>
+														<a href="http://py.codingfans.cc/search.php?keywords=%E6%95%99%E7%A8%8B" target="_blank" class="xi2">教程</a>
+													</div>
+					</td>
+				</tr>
+			</tbody></table>
+			</form>
+		</div>
+	</div>
+</div>
+<!--HEAD end-->
+
+<!--LIST start-->
+<div id="wp" class="wp">
+	<div id="pt" class="bm cl">
+			<div class="z">
+			<a href="http://py.codingfans.cc/" class="nvhm" title="内核源码 - 10分钟学院">内核源码 - 10分钟学院</a><em>»</em><a href="http://py.codingfans.cc/index.php">论坛</a><em>»</em><a href="http://py.codingfans.cc/index.php?bigid=1">PHP技术交流</a><em>»</em><a href="http://py.codingfans.cc/list.php?classid=5">内核源码</a>
+			</div>
+	</div>
+	<div class="boardnav">
+		<div id="ct" class="wp cl" style="margin-left:145px">
+			<div id="sd_bdl" class="bdl" style="width:130px;margin-left:-145px">
+				<div class="tbn" id="forumleftside"><h2 class="bdl_h">版块导航</h2>
+										<dl class="a" id="lf_1">
+						<dt><a href="javascript:;" title="PHP技术交流">PHP技术交流</a></dt>
+																		<dd class="bdl_a">
+						<a href="http://py.codingfans.cc/list.php?classid=5" title="内核源码">内核源码</a>
+						</dd>
+																																				<dd>
+						<a href="http://py.codingfans.cc/list.php?classid=3" title="PHP框架">PHP框架</a>
+						</dd>
+																																				<dd>
+						<a href="http://py.codingfans.cc/list.php?classid=4" title="开源产品">开源产品</a>
+						</dd>
+																																				<dd>
+						<a href="http://py.codingfans.cc/list.php?classid=6" title="进阶讨论">进阶讨论</a>
+						</dd>
+																																									</dl>
+										<dl class="a" id="lf_2">
+						<dt><a href="javascript:;" title="程序人生">程序人生</a></dt>
+																														<dd>
+						<a href="http://py.codingfans.cc/list.php?classid=9" title="求职招聘">求职招聘</a>
+						</dd>
+																																				<dd>
+						<a href="http://py.codingfans.cc/list.php?classid=8" title="经验分享">经验分享</a>
+						</dd>
+																																				<dd>
+						<a href="http://py.codingfans.cc/list.php?classid=7" title="名人故事">名人故事</a>
+						</dd>
+																																																					</dl>
+										<dl class="a" id="lf_11">
+						<dt><a href="javascript:;" title=""></a></dt>
+																																																																																																						<dd>
+						<a href="http://py.codingfans.cc/list.php?classid=13" title="22">22</a>
+						</dd>
+																								<dd>
+						<a href="http://py.codingfans.cc/list.php?classid=12" title="11">11</a>
+						</dd>
+																	</dl>
+										<dl class="a" id="lf_10">
+						<dt><a href="javascript:;" title=""></a></dt>
+																																																																																																																							</dl>
+									</div>
+			</div>
+
+			<div class="mn">
+
+				<div class="bm bml pbn">
+					<div class="bm_h cl">
+					<h1 class="xs2">
+					<a href="http://py.codingfans.cc/list.php?classid=5">内核源码</a>
+					<span class="xs1 xw0 i">今日: <strong class="xi1">0</strong><span class="pipe">|</span>主题: <strong class="xi1">89</strong></span></h1>
+					</div>
+										<div class="bm_c cl pbn">
+
+						<div>
+							版主: <span class="xi2">test001</span>
+						</div>
+
+					</div>
+									</div>
+
+				<div id="pgt" class="bm bw0 pgs cl">
+				<span class="pgb y"><a href="http://py.codingfans.cc/index.php">返&nbsp;回</a></span>
+				<a href="http://py.codingfans.cc/addc.php?classid=5" id="newspecial" title="发新帖"><img src="./内核源码 - 10分钟学院_files/pn_post.png" alt="发新帖"></a></div>
+
+				<div id="threadlist" class="tl bm bmw">
+				<div class="th">
+				<table cellspacing="0" cellpadding="0">
+				<tbody><tr>
+				<th colspan="2">
+				<div class="tf">
+				筛选:
+				<a href="http://py.codingfans.cc/list.php?classid=5" class="xi2">全部</a><span class="pipe">|</span><a href="http://py.codingfans.cc/list.php?classid=5&amp;elite=1" class="xi2">精华</a></div>
+				</th>
+				<td class="by">作者</td>
+				<td class="num">回复/查看</td>
+				<td class="by">最后发表</td>
+				</tr>
+				</tbody></table>
+				</div>
+				<div class="bm_c">
+				<form method="post" autocomplete="off" name="moderate" id="moderate" action="http://py.codingfans.cc/list.php?classid=5">
+				<table summary="forum_2" id="forum_2" cellspacing="0" cellpadding="0">
+											<tbody><tr>
+							<td class="icn">
+							<a href="http://py.codingfans.cc/detail.php?id=278" title="新窗口打开" target="_blank"><img src="./内核源码 - 10分钟学院_files/folder_common.gif"></a>
+							</td>
+							<th class="common">
+							 <a href="http://py.codingfans.cc/detail.php?id=278" class="xst" style="color:red">test</a>
+							 							 							 <img src="./内核源码 - 10分钟学院_files/digest_1.gif" align="absmiddle" alt="digest" title="精华帖">
+							 							 							</th>
+							<td class="by">
+							<cite>admin</cite>
+							<em><span class="xi1">2019-07-27</span></em>
+							</td>
+							<td class="num"><a href="http://py.codingfans.cc/detail.php?id=278" class="xi2">1</a><em>26</em></td>
+							<td class="by">
+							<cite>admin</cite><em><span title="2019-07-27 14:41:33">20小时前</span></em>							</td>
+						</tr>
+											<tr>
+							<td class="icn">
+							<a href="http://py.codingfans.cc/detail.php?id=8" title="新窗口打开" target="_blank"><img src="./内核源码 - 10分钟学院_files/folder_common.gif"></a>
+							</td>
+							<th class="common">
+							 <a href="http://py.codingfans.cc/detail.php?id=8" class="xst" style="color:red">关于php你可能不知道的－php的事件驱动化设计</a>
+							 							 - [售价 <span class="xw1">10</span> 金钱]
+							 							 							 <img src="./内核源码 - 10分钟学院_files/digest_1.gif" align="absmiddle" alt="digest" title="精华帖">
+							 							 							</th>
+							<td class="by">
+							<cite></cite>
+							<em><span class="xi1">2015-10-08</span></em>
+							</td>
+							<td class="num"><a href="http://py.codingfans.cc/detail.php?id=8" class="xi2">6</a><em>259</em></td>
+							<td class="by">
+							<cite>admin</cite><em><span title="2019-07-27 16:01:50">19小时前</span></em>							</td>
+						</tr>
+											<tr>
+							<td class="icn">
+							<a href="http://py.codingfans.cc/detail.php?id=294" title="新窗口打开" target="_blank"><img src="./内核源码 - 10分钟学院_files/folder_common.gif"></a>
+							</td>
+							<th class="common">
+							 <a href="http://py.codingfans.cc/detail.php?id=294" class="xst">12313213213131</a>
+							 							 							 							</th>
+							<td class="by">
+							<cite>zzzxxx</cite>
+							<em><span class="xi1">2019-07-27</span></em>
+							</td>
+							<td class="num"><a href="http://py.codingfans.cc/detail.php?id=294" class="xi2">3</a><em>10</em></td>
+							<td class="by">
+							<cite>zzzxxx</cite><em><span title="2019-07-27 19:48:52">15小时前</span></em>							</td>
+						</tr>
+											<tr>
+							<td class="icn">
+							<a href="http://py.codingfans.cc/detail.php?id=270" title="新窗口打开" target="_blank"><img src="./内核源码 - 10分钟学院_files/folder_common.gif"></a>
+							</td>
+							<th class="common">
+							 <a href="http://py.codingfans.cc/detail.php?id=270" class="xst"></a>
+							 							 							 							</th>
+							<td class="by">
+							<cite>lycc</cite>
+							<em><span class="xi1">2019-07-26</span></em>
+							</td>
+							<td class="num"><a href="http://py.codingfans.cc/detail.php?id=270" class="xi2">0</a><em>10</em></td>
+							<td class="by">
+							<cite>lycc</cite><em><span title="2019-07-26 18:48:20">1天前</span></em>							</td>
+						</tr>
+											<tr>
+							<td class="icn">
+							<a href="http://py.codingfans.cc/detail.php?id=269" title="新窗口打开" target="_blank"><img src="./内核源码 - 10分钟学院_files/folder_common.gif"></a>
+							</td>
+							<th class="common">
+							 <a href="http://py.codingfans.cc/detail.php?id=269" class="xst"></a>
+							 							 							 							</th>
+							<td class="by">
+							<cite>lycc</cite>
+							<em><span class="xi1">2019-07-26</span></em>
+							</td>
+							<td class="num"><a href="http://py.codingfans.cc/detail.php?id=269" class="xi2">0</a><em>9</em></td>
+							<td class="by">
+							<cite>lycc</cite><em><span title="2019-07-26 18:28:10">1天前</span></em>							</td>
+						</tr>
+											<tr>
+							<td class="icn">
+							<a href="http://py.codingfans.cc/detail.php?id=268" title="新窗口打开" target="_blank"><img src="./内核源码 - 10分钟学院_files/folder_common.gif"></a>
+							</td>
+							<th class="common">
+							 <a href="http://py.codingfans.cc/detail.php?id=268" class="xst"></a>
+							 							 							 							</th>
+							<td class="by">
+							<cite>lycc</cite>
+							<em><span class="xi1">2019-07-26</span></em>
+							</td>
+							<td class="num"><a href="http://py.codingfans.cc/detail.php?id=268" class="xi2">0</a><em>9</em></td>
+							<td class="by">
+							<cite>lycc</cite><em><span title="2019-07-26 18:21:10">1天前</span></em>							</td>
+						</tr>
+											<tr>
+							<td class="icn">
+							<a href="http://py.codingfans.cc/detail.php?id=267" title="新窗口打开" target="_blank"><img src="./内核源码 - 10分钟学院_files/folder_common.gif"></a>
+							</td>
+							<th class="common">
+							 <a href="http://py.codingfans.cc/detail.php?id=267" class="xst">好难啊</a>
+							 							 - [售价 <span class="xw1">2</span> 金钱]
+							 							 							 							</th>
+							<td class="by">
+							<cite>admin</cite>
+							<em><span class="xi1">2019-07-26</span></em>
+							</td>
+							<td class="num"><a href="http://py.codingfans.cc/detail.php?id=267" class="xi2">0</a><em>25</em></td>
+							<td class="by">
+							<cite>admin</cite><em><span title="2019-07-26 13:46:39">1天前</span></em>							</td>
+						</tr>
+											<tr>
+							<td class="icn">
+							<a href="http://py.codingfans.cc/detail.php?id=266" title="新窗口打开" target="_blank"><img src="./内核源码 - 10分钟学院_files/folder_common.gif"></a>
+							</td>
+							<th class="common">
+							 <a href="http://py.codingfans.cc/detail.php?id=266" class="xst">ghjkhjklhjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</a>
+							 							 - [售价 <span class="xw1">888</span> 金钱]
+							 							 							 							</th>
+							<td class="by">
+							<cite>admin</cite>
+							<em><span class="xi1">2019-07-26</span></em>
+							</td>
+							<td class="num"><a href="http://py.codingfans.cc/detail.php?id=266" class="xi2">0</a><em>19</em></td>
+							<td class="by">
+							<cite>admin</cite><em><span title="2019-07-26 13:01:01">1天前</span></em>							</td>
+						</tr>
+											<tr>
+							<td class="icn">
+							<a href="http://py.codingfans.cc/detail.php?id=265" title="新窗口打开" target="_blank"><img src="./内核源码 - 10分钟学院_files/folder_common.gif"></a>
+							</td>
+							<th class="common">
+							 <a href="http://py.codingfans.cc/detail.php?id=265" class="xst">nihao</a>
+							 							 - [售价 <span class="xw1">20</span> 金钱]
+							 							 							 <img src="./内核源码 - 10分钟学院_files/digest_1.gif" align="absmiddle" alt="digest" title="精华帖">
+							 							 							</th>
+							<td class="by">
+							<cite>admin</cite>
+							<em><span class="xi1">2019-07-26</span></em>
+							</td>
+							<td class="num"><a href="http://py.codingfans.cc/detail.php?id=265" class="xi2">0</a><em>19</em></td>
+							<td class="by">
+							<cite>admin</cite><em><span title="2019-07-26 12:49:42">1天前</span></em>							</td>
+						</tr>
+											<tr>
+							<td class="icn">
+							<a href="http://py.codingfans.cc/detail.php?id=264" title="新窗口打开" target="_blank"><img src="./内核源码 - 10分钟学院_files/folder_common.gif"></a>
+							</td>
+							<th class="common">
+							 <a href="http://py.codingfans.cc/detail.php?id=264" class="xst"></a>
+							 							 							 							</th>
+							<td class="by">
+							<cite>admin</cite>
+							<em><span class="xi1">2019-07-26</span></em>
+							</td>
+							<td class="num"><a href="http://py.codingfans.cc/detail.php?id=264" class="xi2">0</a><em>7</em></td>
+							<td class="by">
+							<cite>admin</cite><em><span title="2019-07-26 07:47:18">2天前</span></em>							</td>
+						</tr>
+									</tbody></table>
+				</form>
+				</div>
+				</div>
+
+				<div class="bm bw0 pgs cl">
+				<span class="pgb y"><a href="http://py.codingfans.cc/index.php">返&nbsp;回</a></span>
+				<a href="http://py.codingfans.cc/addc.php?classid=5" id="newspecialtmp" title="发新帖"><img src="./内核源码 - 10分钟学院_files/pn_post.png" alt="发新帖"></a></div>
+				<div style="width:800px; margin:0 auto; padding:10px 0px; text-align:right">
+				&nbsp;&nbsp;<input type="text" onkeydown="javascript:if(event.keyCode==13){var page=(this.value&gt;9)?9:this.value;location=&#39;/list.php?classid=5&amp;page=&#39;+page+&#39;&#39;}" value="1" style="width:25px"><input type="button" value="GO" onclick="javascript:var page=(this.previousSibling.value&gt;9)?9:this.previousSibling.value;location=&#39;/list.php?classid=5&amp;page=&#39;+page+&#39;&#39;">&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;<a href="http://py.codingfans.cc/list.php?classid=5&amp;page=2">下一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://py.codingfans.cc/list.php?classid=5&amp;page=9">尾 页</a>&nbsp;&nbsp;&nbsp;&nbsp;共有<b>89</b>条记录&nbsp;&nbsp;&nbsp;&nbsp;每页显示<b>10</b>条，本页<b>1-10</b>条&nbsp;&nbsp;&nbsp;&nbsp;<b>1/9</b>页&nbsp;&nbsp;				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--LIST end-->
+
+<!--FOOT start-->
+<div id="ft" class="wp cl">
+	<div id="flk" class="y">
+		<p>
+		<a href="http://py.codingfans.cc/list.php?classid=5#">京ICP备 89273号</a><span class="pipe">|</span><strong><a href="http://www.phpxy.com/" target="_blank">phpxy</a></strong>
+		</p>
+		<p class="xs0">
+			Time Now Is: 07-28 11:07		</p>
+	</div>
+	<div id="frt">
+		<p>Powered by <strong><a href="http://www.phpxy.com/" target="_blank">phpxy</a></strong> <em>V2</em></p>
+		<p class="xs0">© 2019 <a href="http://www.phpxy.com/" target="_blank">phpxy Inc.</a></p>
+	</div>
+</div><!--FOOT end-->
+</body>
+{% endblock body %}
+</html>
