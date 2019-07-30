@@ -1,0 +1,115 @@
+{% extends 'common/Base.html' %}
+{% block head %}
+    {{ super() }}
+    <title>{{ title }}</title>
+{% endblock head %}
+{% block body %}
+    {% block navbar %}
+        {{ super() }}
+    {% endblock navbar %}
+    {% block content %}
+
+        <!--LIST start-->
+        <div id="wp" class="wp">
+            <div id="pt" class="bm cl">
+                <div class="z">
+                    <a href="{{ url_for('bbs.index') }}" class="nvhm" title="首页">密码安全 - 10分钟学院</a> <em>›</em><a
+                        href="{{ url_for('bbs.person_info') }}">设置</a> <em>›</em>修改头像
+                </div>
+            </div>
+            <div id="ct" class="ct2_a wp cl">
+                <div class="mn">
+                    <div class="bm bw0">
+                        <p class="bbda pbm mbm">您必须填写旧密码才能修改下面的资料</p>
+                        <form action="http://py.codingfans.cc/home_pass.php" method="post" autocomplete="off">
+                            <table summary="个人资料" cellspacing="0" cellpadding="0" class="tfm">
+                                <tbody>
+                                <tr>
+                                    <th><span class="rq" title="必填">*</span>旧密码</th>
+                                    <td><input type="password" name="oldpassword" id="oldpassword" class="px"></td>
+                                </tr>
+                                <tr>
+                                    <th>新密码</th>
+                                    <td>
+                                        <input type="password" name="newpassword" id="newpassword" class="px">
+                                        <p class="d">如不需要更改密码，此处请留空 </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>确认新密码</th>
+                                    <td>
+                                        <input type="password" name="newpassword2" id="newpassword2" class="px">
+                                        <p class="d">如不需要更改密码，此处请留空 </p>
+                                    </td>
+                                </tr>
+                                <tr id="contact">
+                                    <th>Email</th>
+                                    <td>
+                                        <input type="text" name="emailnew" id="emailnew" value="lycc@123.com"
+                                               class="px">
+                                        <p class="d">取回密码时使用</p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>安全提问</th>
+                                    <td>
+                                        <select name="questionidnew" id="questionidnew">
+                                            <option selected="">保持原有的安全提问和答案</option>
+                                            <option>无安全提问</option>
+                                            <option>母亲的名字</option>
+                                            <option>爷爷的名字</option>
+                                            <option>父亲出生的城市</option>
+                                            <option>您其中一位老师的名字</option>
+                                            <option>您个人计算机的型号</option>
+                                            <option>您最喜欢的餐馆名称</option>
+                                            <option>驾驶执照最后四位数字</option>
+                                        </select>
+                                        <p class="d">如果您启用安全提问，登录时需填入相应的项目才能登录 </p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>回答</th>
+                                    <td>
+                                        <input type="text" name="answernew" id="answernew" value="" class="px">
+                                        <p class="d">如您设置新的安全提问，请在此输入答案 </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <td>
+                                        <button type="submit" name="pwdsubmit" value="true" class="pn pnc">
+                                            <strong>保存</strong></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+
+
+                    </div>
+                </div>
+
+                <div class="appl">
+                    <div class="tbn">
+                        <h2 class="mt bbda">设置</h2>
+                        <ul>
+                            <li class="a"><a href="{{ url_for('bbs.person_protrait') }}">修改头像</a></li>
+                            <li><a href="{{ url_for('bbs.person_info') }}">个人资料</a></li>
+                            <li><a href="{{ url_for('bbs.person_signature') }}">个人签名</a></li>
+                            <li><a href="{{ url_for('bbs.person_psdsafe') }}">密码安全</a></li>
+                            <!--<li><a href="home_sc.php">收藏管理</a></li>-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--LIST end-->
+
+    {% endblock content %}
+    {% block footer %}
+        {{ super() }}
+    {% endblock footer %}
+{% endblock body %}
+</html>
