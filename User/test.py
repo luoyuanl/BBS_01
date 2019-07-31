@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template
-from ext import db
-from User.models import *
-from User.views import bbs
+from flask import current_app
+from flask_mail import Message
 
+from User.views import *
 
 # 创建表
+from ext import mail
+
+
 @bbs.route('/create/')
 def create_table():
     db.create_all()
@@ -56,26 +58,30 @@ def update_user(uid):
     print(user, type(user))
     return "修改记录"
 
-
-@bbs.route('/jiangxiaomeng/')
-def create_all():
-    user1 = User(username='admin', upassword_hash='123')
-    user2 = User(username='张三', upassword_hash='456')
-    user3 = User(username='李四', upassword_hash='lisi')
-    cat1 = Category(categoryname='python基础', cpid=0)
-    cat2 = Category(categoryname='python进阶', cpid=0)
-    cat3 = Category(categoryname='python之禅', cpid=0)
-    cat1_1 = Category(categoryname='基本语法', cpid=1)
-    cat1_2 = Category(categoryname='linux使用', cpid=1)
-    cat2_1 = Category(categoryname='flask框架', cpid=2)
-    cat2_2 = Category(categoryname='Django框架', cpid=2)
-    cat3_3 = Category(categoryname='人生感悟', cpid=3)
-    post1 = Posts(ptitle='11111')
-    post2 = Posts(ptitle='22222')
-    objlist = [user1, user2, user3, cat1, cat2, cat3, cat1_1, cat1_2, cat2_1, cat2_2, cat3_3, post1, post2]
-    for i in objlist:
-        i.save_one()
-    return 'save_all'
+@bbs.route('/getmsg/')
+def getmsg():
+    data = User.query.filter(User.username == '张三').all()
+    if data:
+        print(data[0].username)
+    else:
+        print('没有数据')
+    return 'found'
 
 
+@bbs.route('/mailto/')
+def mailto():
+    # 生成邮件内容
+    message = Message('测试', recipients='luoyuan_p@hotmail.com', sender=current_app.config['MAIL_USERNAME'])
 
+    message.html = '<h2>好难！</2>'
+    mail.send(message)
+    return '发送邮件成功'
+
+@bbs.route('/user/<int:page>')
+def list_user(page):
+    paginagtion = User.query.paginatate(page=page,per_page=5)
+    return render_template('posts,html',**{
+        'users':paginagtion.items,
+        'current':paginagtion.page,
+        'per_page':5
+    })

@@ -8,56 +8,56 @@
             {{ super() }}
         {% endblock navbar %}
         {% block content %}
-
+            {{ moment.include_jquery() }}{{ moment.include_moment() }}{{ moment.locale('zh-CN') }}
             <!--CONTENT start-->
             <div id="wp" class="wp">
                 <div id="pt" class="bm cl">
                     <div class="z">
-                        <a href="../templates" class="nvhm" title="首页 - 10分钟学院">首页 - 10分钟学院</a><em>&raquo;</em>
-                        <a href="index.html">论坛</a></div>
+                        <a href="{{ url_for('bbs.index') }}" class="nvhm" title=""></a><em>&raquo;</em>
+                        <a href="{{ url_for('bbs.index') }}">论坛</a></div>
                     <div class="z"></div>
                 </div>
                 <div id="ct" class="wp cl">
                     <div id="chart" class="bm bw0 cl">
                         <div class="y">
                             <p class="chart z">
-                                帖子: <em>120</em><span class="pipe">|</span>
-                                会员: <em>79</em><span class="pipe">|</span>
-                                欢迎新会员: <em>tom</em>
+                                帖子: <em>{{ postscount }}</em><span class="pipe">|</span>
+                                会员: <em>{{ userscount }}</em><span class="pipe">|</span>
+                                欢迎新会员: <em>{{ newuser[-1].username }}</em>
                             </p>
                         </div>
                     </div>
                     <div class="mn">
                         <div class="fl bm">
                             <!--板块 start-->
-                            {% for bigc in bigcategory %}
+                            {% for b in bigcategory %}
                                 <div class="bm bmw  cl">
                                     <div class="bm_h cl">
-                                        <h2><a href="{{ url_for('bbs.index',cid=bigc.cid) }}">{{ bigc.categoryname }}</a></h2>
+                                        <h2><a href="{{ url_for('bbs.index',cid=b.cid) }}">{{ b.categoryname }}</a></h2>
                                     </div>
                                     <div id="category_1" class="bm_c">
                                         <table cellspacing="0" cellpadding="0" class="fl_tb" border="1px solid red">
-                                            {% for smallc in smallcategory %}
-                                                {% if bigc.cid == smallc.cpid %}
+                                            {% for s in smallcategory %}
+                                                {% if b.cid == s.cpid %}
                                                     <tr class="fl_row" style="border-bottom: 1px dashed #CDCDCD; ">
                                                         <td class="fl_icn">
-                                                            <a href="{{ url_for('bbs.index',cid=bigc.cid) }}">
-                                                                <img src="{{ url_for('static',filename='images/forum.gif') }}"
-                                                                     alt="{{ smallc.categoryname }}"/>
+                                                            <a href="{{ url_for('bbs.posts',cid=s.cid) }}">
+                                                                <img src="{{ url_for('static',filename='images/forum.gif') }}" alt="{{ s.categoryname }}"/>
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <h2><a href="{{ url_for('bbs.index',cid=bigc.cid) }}" style="color:">{{ smallc.categoryname }}</a></h2>
+                                                            <h2><a href="{{ url_for('bbs.posts',cid=s.cid) }}" style="color:">{{ s.categoryname }}</a></h2>
                                                             <p class="xg2"></p>
-                                                            <p>版主: <span class="xi2">{{ smallc.ccompere }}</span></p>
+                                                            <p>版主: <span class="xi2">{{ s.ccompere }}</span></p>
                                                         </td>
                                                         <td class="fl_i">
-                                                            <span class="xi2">106</span><span class="xg1"> / 95</span>
+                                                            <span class="xi2">{{ s.cthemecount }}</span><span class="xg1"> / {{ s.creplycount }}</span>
                                                         </td>
                                                         <td class="fl_by">
                                                             <div>
-                                                                <a href="detail.php?id=250" class="xi2">向迈克尔杰克致敬——</a>
-                                                                <cite><span title="2019-07-23">19小时前</span> haohl</cite></div>
+                                                                <a href="" class="xi2">{{ s.lastpostname }}</a>
+                                                                <cite><span title="2019-07-23">{{ s.lastreplytime }}</span>&nbsp;{{ s.lastreplyuser }}</cite>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 {% endif %}

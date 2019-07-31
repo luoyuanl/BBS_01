@@ -1,0 +1,548 @@
+{% extends 'common/Base.html' %}
+{% block head %}
+    {{ super() }}
+    <title>{{ title }}</title>
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/index.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/editor.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/view.css') }}">
+    {% endblock %}
+    {% block script %}
+        <script type="text/javascript" src="{{ url_for('static',filename='js/config.js.下载') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='js/zh-cn.js.下载') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='js/plugin.js.下载') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='js/zh-cn.js(1).下载') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='js/yui.js.下载') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='js/default.js.下载') }}"></script>
+    {% endblock %}
+{% endblock head %}
+{% block body %}
+    {% block navbar %}
+        {{ super() }}
+    {% endblock navbar %}
+    {% block content %}
+
+        <!--LIST start-->
+        <div id="wp" class="wp">
+            <div id="pt" class="bm cl">
+                <div class="z">
+                    <a href="{{ url_for('bbs.index') }}">论坛</a><em>»</em>
+                    <a href="{{ url_for('bbs.index',cid=bigc.cid) }}">{{ bigc.categoryname }}</a><em>»</em>
+                    <a href="{{ url_for('bbs.posts',cid=smallc.cid) }}">{{ smallc.categoryname }}</a><em>»</em>
+{#                    <a href="{{ url_for('bbs.postdetail',pid=post.pid) }}">{{ post.ptitle }}</a><em>»</em>#}
+                </div>
+                <div class="z"></div>
+            </div>
+            <div id="ct" class="wp cl">
+                <div id="pgt" class="pgs mbm cl pbm bbs">
+                    <div class="pgt"></div>
+                    <span class="y pgb" id="visitedforums">
+                        <a href="{{ url_for('bbs.posts',cid=smallc.cid) }}">返回列表</a>
+                    </span>
+                    <a id="newspecial" href="{{ url_for('bbs.editpost',cid=smallc.cid) }}" target="_blank" title="发新帖">
+                        <img src="{{ url_for('static',filename='images/pn_post.png') }}" alt="发新帖">
+                    </a>
+                    <a id="post_reply" href="http://py.codingfans.cc/detail.php?id=225#f_pst" title="回复">
+                        <img src="{{ url_for('static',filename='images/pn_reply.png') }}" alt="回复">
+                    </a>
+                </div>
+                <div id="postlist" class="pl bm">
+                    <!--楼主 START-->
+                    <table cellspacing="0" cellpadding="0">
+                        <tbody>
+                        <tr>
+                            <td class="pls ptm pbm">
+                                <div class="hm">
+                                    <span class="xg1">查看:</span> <span class="xi1">128</span><span class="pipe">|</span>
+                                    <span class="xg1">回复:</span> <span class="xi1">8</span>
+                                </div>
+                            </td>
+                            <td class="plc ptm pbn">
+                                <div class="y">
+                                    <a href="http://py.codingfans.cc/detail.php?id=250" title="上一主题">
+                                        <img src="{{ url_for('static',filename='images/thread-prev.png') }}" alt="上一主题" class="vm">
+                                    </a>
+                                    <a href="http://py.codingfans.cc/detail.php?id=205" title="下一主题">
+                                        <img src="{{ url_for('static',filename='images/thread-next.png') }}" alt="下一主题" class="vm">
+                                    </a>
+                                </div>
+                                <h1 class="ts">{{ post.ptitle }}</h1>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <style>
+                        .max_pic {max-width: 120px;}
+                    </style>
+                    <div id="post_225">
+                        <table id="pid225" cellspacing="0" cellpadding="0">
+                            <tbody>
+                            <tr>
+                                <td class="pls" rowspan="2">
+                                    <div class="pi">
+                                        <div class="authi"><a href="" target="_blank" class="xw1">{{ postuser.username }}</a></div>
+                                    </div>
+                                    <!--显示用户信息 START-->
+                                    <div class="p_pop blk bui" id="userinfo225" style="display:none; margin-top: -11px;"
+                                         onmouseout="showdpic('userinfo','225')">
+                                        <div class="m z">
+                                            <div id="userinfo225_ma">
+                                                <img src="{{ url_for('static',filename='images/yh_5d36d64f0c2c8.gif')}}" class="max_pic">
+                                            </div>
+                                        </div>
+                                        <div class="i y">
+                                            <div>
+                                                <strong>admin</strong>
+                                                <em>当前在线</em>
+                                            </div>
+                                            <dl class="cl">
+                                                <dt>注册时间</dt>
+                                                <dd>2019-06-04 18:34:38</dd>
+                                                <dt>积分</dt>
+                                                <dd>191</dd>
+                                                <dt>最后登录</dt>
+                                                <dd>2019-07-24 19:12:40</dd>
+                                            </dl>
+                                            <div class="imicn">
+                                                <a href="http://py.codingfans.cc/detail.php?id=225#" target="_blank" title="查看详细资料">
+                                                    <img src="{{ url_for('static',filename='images/userinfo.gif') }}" alt="查看详细资料">
+                                                </a>
+                                            </div>
+                                            <div id="avatarfeed"><span id="threadsortswait"></span></div>
+                                        </div>
+                                    </div>
+                                    <!--显示用户信息 END-->
+                                    <div>
+                                        <div class="avatar" onmouseover="showbpic(';userinfo','225')">
+                                            <img src="{{ url_for('static',filename='images/yh_5d36d64f0c2c8.gif') }}"
+                                                 class="max_pic">
+                                        </div>
+                                        <p><em>管理员</em></p>
+                                        <p><em>博士</em></p>
+                                    </div>
+
+                                </td>
+                                <td class="plc">
+                                    <div class="pi">
+                                        <div id="fj" class="y">
+                                            <label class="z">电梯直达</label>
+                                            <input id="louceng" type="text" class="px p_fre z" size="2" title="跳转到指定楼层">
+                                            <a href="javascript:;" id="fj_btn" class="z" title="跳转到指定楼层"><img
+                                                    src="{{ url_for('static',filename='images/fj_btn.png') }}"
+                                                    onclick="golouceng()"
+                                                    alt="跳转到指定楼层" class="vm"></a>
+                                            <script>
+                                                function golouceng() {
+                                                    location.href = 'detail.php?id=225#post_' + document.getElementById('louceng').value;
+                                                }
+                                            </script>
+                                        </div>
+                                        <strong>
+                                            <a href="http://py.codingfans.cc/detail.php?id=225" id="postnum4">楼主</a>
+                                        </strong>
+                                        <div class="pti">
+                                            <div class="pdbt">
+                                            </div>
+                                            <div class="authi">
+                                                <img class="authicn vm" id="authicon225" src="{{ url_for('static',filename='images/online_admin.gif') }}">
+                                                <em id="authorposton225">发表于 2019-07-15 09:03:46</em>
+                                                <!--<span class="pipe">|</span><a href="#">只看该作者</a>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pct">
+                                        <style type="text/css">.pcb {margin-right: 0}</style>
+                                        <div class="pcb">
+                                            <div class="t_fsz">
+                                                <table cellspacing="0" cellpadding="0">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="t_f" id="postmessage_225"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div id="comment_225" class="cm"></div>
+                                            <div id="post_rate_div_225"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="plc plm">
+                                    <div class="modact">本主题已加入精华</div>
+                                    <div class="sign" style="max-height:100px;maxHeightIE:100px;">
+                                        <p><span style="background-color:#ffff00;">{{ postuser.usignature }}</span></p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="pls"></td>
+                                <td class="plc">
+                                    <div class="po">
+                                        <div class="pob cl">
+                                            <em><a class="fastre" href="http://py.codingfans.cc/detail.php?id=225#f_pst">回复</a></em>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="ad">
+                                <td class="pls"></td>
+                                <td class="plc"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--楼主 END-->
+                    <!--回复列表 START-->
+                    {% for reply in replies %}
+                        <div id="post_1">
+                            <table id="pid226" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                <tr>
+                                    <td class="pls" rowspan="2">
+                                        <div class="pi"><div class="authi">{{ replyuser.username }}</div></div>
+                                        <!--显示用户信息 START-->
+                                        <div class="p_pop blk bui" id="userinfo226"
+                                             style="display:none; margin-top: -11px;"
+                                             onmouseout="showdpic('userinfo','226')">
+                                            <div class="m z">
+                                                <div id="userinfo226_ma">
+                                                    <img src="{{ url_for('static',filename='images/yh_5d36d64f0c2c8.gif') }}" class="max_pic">
+                                                </div>
+                                            </div>
+                                            <div class="i y">
+                                                <div>
+                                                    <strong>admin</strong>
+                                                    <em>当前在线</em>
+                                                </div>
+                                                <dl class="cl">
+                                                    <dt>注册时间</dt>
+                                                    <dd>2019-06-04</dd>
+                                                    <dt>积分</dt>
+                                                    <dd>191</dd>
+                                                    <dt>最后登录</dt>
+                                                    <dd>2019-07-24</dd>
+                                                </dl>
+                                                <div class="imicn">
+                                                    <a href="http://py.codingfans.cc/detail.php?id=225#" target="_blank"
+                                                       title="查看详细资料">
+                                                        <img src="{{ url_for('static',filename='images/userinfo.gif') }}" alt="查看详细资料"></a>
+                                                </div>
+                                                <div id="avatarfeed"><span id="threadsortswait"></span></div>
+                                            </div>
+                                        </div>
+                                        <!--显示用户信息 END-->
+                                        <div>
+                                            <div class="avatar"
+                                                 onmouseover="showbpic('userinfo','226')">
+                                                <img src={{ url_for('static',filename='images/yh_5d36d64f0c2c8.gif') }}" class="max_pic">
+                                            </div>
+                                            <p><em>管理员</em></p>
+                                            <p><em>博士</em></p>
+                                        </div>
+                                    </td>
+                                    <td class="plc">
+                                        <div class="pi">
+                                            <strong><a>沙发</a></strong>
+                                            <div class="pti">
+                                                <div class="pdbt"></div>
+                                                <div class="authi">
+                                                    <img class="authicn vm" id="authicon226" src="{{ url_for('static',filename='images/online_admin.gif') }}">
+                                                    <em id="authorposton226">发表于<span title="2019-07-18 20:05:24">2019-07-18 20:05:24</span></em>
+                                                    <!--<span class="pipe">|</span><a href="#">只看该作者</a>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pct">
+                                            <div class="pcb">
+                                                <div class="t_fsz">
+                                                    <table cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="t_f" id="postmessage_226">
+                                                                <p>{{ reply.rcontent }}</p>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div id="comment_226" class="cm"></div>
+                                                <div id="post_rate_div_226"></div>
+                                            </div>
+                                        </div>
+                                        <div class="sign" style="max-height:100px;maxHeightIE:100px;">
+                                            <p><span style="background-color:#ffff00;">{{ replyuser.usignature }}</span></p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="plc plm"></td>
+                                </tr>
+                                <tr>
+                                    <td class="pls"></td>
+                                    <td class="plc">
+                                        <div class="po">
+                                            <div class="pob cl">
+                                                <em>
+                                                    <a class="fastre" href="http://py.codingfans.cc/detail.php?id=225#f_pst">回复</a>
+                                                </em>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="ad">
+                                    <td class="pls"></td>
+                                    <td class="plc"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="pgs mtm mbm cl">
+                    <span class="pgb y" id="visitedforumstmp">
+                        <a href="{{ url_for('bbs.posts',cid=smallc.cid) }}">返回列表</a>
+                    </span>
+                    <a id="newspecialtmp" href="{{ url_for('bbs.editpost',cid=smallc.cid) }}" target="_blank" title="发新帖">
+                        <img src="{{ url_for('static',filename='images/pn_post.png') }}" alt="发新帖">
+                    </a>
+                    <a id="post_replytmp" href="http://py.codingfans.cc/detail.php?id=225#f_pst" title="回复">
+                        <img src="{{ url_for('static',filename='images/pn_reply.png') }}" alt="回复">
+                    </a>
+                </div>
+                <div style="width:960px; margin:0 auto; padding:10px 0px; text-align:right">&nbsp;&nbsp;
+                    <input type="text" onkeydown="javascript:if(event.keyCode==13)
+                    {var page=(this.value&gt;1)?1:this.value;location='/detail.php?id=225&amp;page='+page+''}" value="1" style="width:25px">
+                    <input type="button" value="GO" onclick="javascript:var page=(this.previousSibling.value&gt;1)?1:this.previousSibling.value;location='/detail.php?id=225&amp;page='+page+''">&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;共有<b>8</b>条记录&nbsp;&nbsp;&nbsp;&nbsp;每页显示<b>10</b>条，本页<b>1-8</b>条&nbsp;&nbsp;&nbsp;&nbsp;<b>1/1</b>页&nbsp;&nbsp;
+                </div>
+                <!--回帖 START-->
+                <div id="f_pst" class="pl bm bmw">
+                    <form method="post" autocomplete="off" id="fastpostform" action="http://py.codingfans.cc/detail.php">
+                        <table cellspacing="0" cellpadding="0">
+                            <tbody>
+                            <tr>
+                                <td class="pls">
+                                    <div class="avatar">
+                                        <img src="url_for('static'),filename='images/yh_5d36d94c6068c.jpg" class="max_pic">
+                                    </div>
+                                </td>
+                                <td class="plc">
+                                    <span id="fastpostreturn"></span>
+                                    <div class="cl">
+                                        <div id="fastsmiliesdiv" class="y">
+                                            <script type="text/javascript" src="{{ url_for('static',filename='js/ckeditor.js.下载') }}"></script>
+                                            <script type="text/javascript" src="{{ url_for('static',filename='js/sample.js.下载') }}" ></script>
+                                            <textarea name="message" id="editor1" class="ckeditor1" style="visibility: hidden; display: none;"></textarea><span
+                                                id="cke_editor1" class="cke_skin_kama cke_1 cke_editor_editor1"
+                                                dir="ltr"
+                                                title="" lang="zh-cn" tabindex="0" role="application"
+                                                aria-labelledby="cke_editor1_arialbl"><span id="cke_editor1_arialbl"
+                                                                                            class="cke_voice_label">所见即所得编辑器</span><span
+                                                class="cke_browser_webkit" role="presentation"><span
+                                                class="cke_wrapper cke_ltr"
+                                                role="presentation"><table
+                                                class="cke_editor" border="0" cellspacing="0" cellpadding="0"
+                                                role="presentation"><tbody><tr role="presentation"><td
+                                                id="cke_top_editor1"
+                                                class="cke_top"
+                                                role="presentation"><div
+                                                class="cke_toolbox" role="group" aria-labelledby="cke_6"
+                                                onmousedown="return false;"><span id="cke_6"
+                                                                                  class="cke_voice_label">工具栏</span><span
+                                                id="cke_7" class="cke_toolbar" role="toolbar"><span
+                                                class="cke_toolbar_start"></span><span class="cke_toolgroup"
+                                                                                       role="presentation"><span
+                                                class="cke_button"><a id="cke_8" class="cke_off cke_button_bold" "="" href="javascript:void('加粗')" title="加粗" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_8_label" onkeydown="return CKEDITOR.tools.callFunction(4, event);" onfocus="return CKEDITOR.tools.callFunction(5, event);" onclick="CKEDITOR.tools.callFunction(6, this); return false;"><span
+                                                class="cke_icon">&nbsp;</span><span id="cke_8_label"
+                                                                                    class="cke_label">加粗</span></a></span><span
+                                                class="cke_button"><a id="cke_9" class="cke_off cke_button_italic" "="" href="javascript:void('倾斜')" title="倾斜" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_9_label" onkeydown="return CKEDITOR.tools.callFunction(7, event);" onfocus="return CKEDITOR.tools.callFunction(8, event);" onclick="CKEDITOR.tools.callFunction(9, this); return false;"><span
+                                                class="cke_icon">&nbsp;</span><span id="cke_9_label"
+                                                                                    class="cke_label">倾斜</span></a></span><span
+                                                class="cke_separator" role="separator"></span><span
+                                                class="cke_button"><a
+                                                id="cke_10" class="cke_off cke_button_numberedlist" "="" href="javascript:void('编号列表')" title="编号列表" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_10_label" onkeydown="return CKEDITOR.tools.callFunction(10, event);" onfocus="return CKEDITOR.tools.callFunction(11, event);" onclick="CKEDITOR.tools.callFunction(12, this); return false;"><span
+                                                class="cke_icon">&nbsp;</span><span id="cke_10_label"
+                                                                                    class="cke_label">编号列表</span></a></span><span
+                                                class="cke_button"><a id="cke_11"
+                                                                      class="cke_off cke_button_bulletedlist" "="" href="javascript:void('项目列表')" title="项目列表" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_11_label" onkeydown="return CKEDITOR.tools.callFunction(13, event);" onfocus="return CKEDITOR.tools.callFunction(14, event);" onclick="CKEDITOR.tools.callFunction(15, this); return false;"><span
+                                                class="cke_icon">&nbsp;</span><span id="cke_11_label"
+                                                                                    class="cke_label">项目列表</span></a></span><span
+                                                class="cke_separator" role="separator"></span><span
+                                                class="cke_button"><a
+                                                id="cke_12" class="cke_off cke_button_link" "="" href="javascript:void('插入/编辑超链接')" title="插入/编辑超链接" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_12_label" onkeydown="return CKEDITOR.tools.callFunction(16, event);" onfocus="return CKEDITOR.tools.callFunction(17, event);" onclick="CKEDITOR.tools.callFunction(18, this); return false;"><span
+                                                class="cke_icon">&nbsp;</span><span id="cke_12_label"
+                                                                                    class="cke_label">插入/编辑超链接</span></a></span><span
+                                                class="cke_button"><a id="cke_13" class="cke_button_unlink cke_disabled" "="" href="javascript:void('取消超链接')" title="取消超链接" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_13_label" onkeydown="return CKEDITOR.tools.callFunction(19, event);" onfocus="return CKEDITOR.tools.callFunction(20, event);" onclick="CKEDITOR.tools.callFunction(21, this); return false;" aria-disabled="true"><span
+                                                class="cke_icon">&nbsp;</span><span id="cke_13_label"
+                                                                                    class="cke_label">取消超链接</span></a></span></span><span
+                                                class="cke_toolbar_end"></span></span><span id="cke_14"
+                                                                                            class="cke_toolbar"
+                                                                                            role="toolbar"><span
+                                                class="cke_toolbar_start"></span><span class="cke_toolgroup"
+                                                                                       role="presentation"><span
+                                                class="cke_button cke_noalphafix"><a id="cke_15"
+                                                                                     class="cke_off cke_button_uicolor" "="" href="javascript:void('用户界面颜色选择器')" title="用户界面颜色选择器" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_15_label" onkeydown="return CKEDITOR.tools.callFunction(22, event);" onfocus="return CKEDITOR.tools.callFunction(23, event);" onclick="CKEDITOR.tools.callFunction(24, this); return false;"><span
+                                                class="cke_icon"
+                                                style="background-image:url(http://py.codingfans.cc/public/ckeditor/plugins/uicolor/uicolor.gif?t=C3HA5RM);background-position:0 0px;">&nbsp;</span><span
+                                                id="cke_15_label"
+                                                class="cke_label">用户界面颜色选择器</span></a></span></span><span
+                                                class="cke_toolbar_end"></span></span></div><a title="折叠工具栏" id="cke_16"
+                                                                                               tabindex="-1"
+                                                                                               class="cke_toolbox_collapser"
+                                                                                               onclick="CKEDITOR.tools.callFunction(25)"><span>▲</span></a></td></tr><tr
+                                                role="presentation"><td id="cke_contents_editor1" class="cke_contents"
+                                                                        style="height:200px" role="presentation"><iframe
+                                                style="width:100%;height:100%" frameborder="0"
+                                                title="所见即所得编辑器, editor1, 按 ALT+0 查看帮助。"
+                                                src="url_for('static'),filename='js/saved_resource.html" tabindex="-1"
+                                                allowtransparency="true"></iframe></td></tr><tr role="presentation"><td
+                                                id="cke_bottom_editor1" class="cke_bottom" role="presentation"><div
+                                                class="cke_resizer cke_resizer_ltr" title="拖拽以改变尺寸"
+                                                onmousedown="CKEDITOR.tools.callFunction(3, event)"></div><span
+                                                id="cke_path_editor1_label" class="cke_voice_label">元素路径</span><div
+                                                id="cke_path_editor1" class="cke_path" role="group"
+                                                aria-labelledby="cke_path_editor1_label"><span
+                                                class="cke_empty">&nbsp;</span></div></td></tr></tbody></table><style>.cke_skin_kama {
+                                            visibility: hidden;
+                                        }</style></span></span></span>
+                                            <script type="text/javascript">
+                                                //<![CDATA[
+
+                                                // Replace the <textarea id="editor"> with an CKEditor
+                                                // instance, using default configurations.
+                                                CKEDITOR.replace('editor1',
+                                                    {
+                                                        extraPlugins: 'uicolor',
+                                                        toolbar:
+                                                            [
+                                                                ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
+                                                                ['UIColor']
+                                                            ]
+                                                    });
+
+                                                //]]>
+                                            </script>
+                                            <br>
+
+                                        </div>
+                                        <p class="ptm pnpost">
+                                            <button type="submit" name="replysubmit" id="fastpostsubmit"
+                                                    class="pn pnc vm"
+                                                    value="replysubmit" tabindex="5">
+                                                <strong>发表回复</strong></button>
+                                        </p>
+                                    </div>
+                                    <input name="id" type="hidden" value="225">
+                                    <input name="classid" type="hidden" value="5">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <!--回帖 END-->
+            </div>
+
+
+        </div>
+        <!--LIST end-->
+        <script>
+            function showbpic(obj1, obj2) {
+
+                document.getElementById(obj1 + obj2).style.display = 'block';
+                //document.getElementById(obj1+obj2+'_ma').innerHtml=document.getElementById('avatar'+obj2).innerHtml;
+
+            }
+
+            function showdpic(obj1, obj2) {
+
+                document.getElementById(obj1 + obj2).style.display = 'none';
+                //document.getElementById(obj1+obj2+'_ma').innerHtml='';
+
+            }
+        </script>
+
+        <!--FOOT start-->
+        <div id="ft" class="wp cl">
+            <div id="flk" class="y">
+                <p>
+                    <a href="http://py.codingfans.cc/detail.php?id=225#">京ICP备 89273号</a><span
+                        class="pipe">|</span><strong><a
+                        href="http://www.phpxy.com/" target="_blank">phpxy</a></strong>
+                </p>
+                <p class="xs0">
+                    Time Now Is: 07-24 19:14 </p>
+            </div>
+            <div id="frt">
+                <p>Powered by <strong><a href="http://www.phpxy.com/" target="_blank">phpxy</a></strong> <em>V2</em></p>
+                <p class="xs0">© 2019 <a href="http://www.phpxy.com/" target="_blank">phpxy Inc.</a></p>
+            </div>
+        </div><!--FOOT end-->
+
+    {% endblock content %}
+    {% block footer %}
+        {{ super() }}
+    {% endblock footer %}
+    <style>
+        .paylist {
+            z-index: 20;
+            left: 50%; /*ff ie7*/
+            top: 50%; /*ff ie7*/
+            background: #FFFFFF;
+            margin-left: -100px !important; /*ff ie7 该值为本身宽的一半 */
+            margin-top: -60px !important; /*ff ie7 该值为本身高的一半*/
+            margin-top: 0px;
+            position: fixed !important; /*ff ie7*/
+            position: absolute; /*ie6*/
+            _top: expression(eval(document.compatmode && document.compatmode=='css1compat') ?
+					documentelement.scrolltop + (document.documentelement.clientheight-this.offsetheight)/2 :/*ie6*/
+					document.body.scrolltop + (document.body.clientheight - this.clientheight)/2); /*ie5 ie5.5*/
+        }
+    </style>
+    <div class="paylist" style="width:410px; overflow:hidden; border:5px solid #ccc; display:none;">
+        <form id="payform" method="post" autocomplete="off" action="http://py.codingfans.cc/detail.php?id=225">
+            <div class="f_c">
+                <h3 class="flb">
+                    <em id="return_">购买主题</em>
+                    <span>
+				<a href="http://py.codingfans.cc/detail.php?id=225" class="flbc" title="关闭">关闭</a>
+			</span>
+                </h3>
+                <div class="c">
+                    <table class="list" cellspacing="0" cellpadding="0" style="width:400px">
+                        <tbody>
+                        <tr>
+                            <td width="20"></td>
+                            <td><b>帖子</b></td>
+                            <td width="80"><b>作者</b></td>
+                            <td width="100"><b>售价(积分)</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><b>总计：</b>
+                            </td>
+                            <td><b></b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="o pns">
+                                    <button type="submit" name="paysubmit" class="pn pnc" value="true">
+                                        <span>购买</span>
+                                    </button>
+                                    <button type="submit" name="delsubmit" class="pn pnc" value="true">
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock body %}
+</html>

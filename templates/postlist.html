@@ -1,0 +1,156 @@
+{% extends 'common/Base.html' %}
+{% block head %}
+    {{ super() }}
+    <title>{{ title }}</title>
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/index.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/list.css') }}">
+    {% endblock css %}
+{% endblock head %}
+{% block body %}
+    {% block navbar %}
+        {{ super() }}
+    {% endblock navbar %}
+    {% block content %}
+        {{ moment.include_jquery() }}{{ moment.include_moment() }}{{ moment.locale('zh-CN') }}
+        <!--LIST start-->
+        <div id="wp" class="wp">
+            <div id="pt" class="bm cl">
+                <div class="z">
+                    <a href="{{ url_for('bbs.index') }}" class="nvhm" title=""></a><em>&raquo;</em>
+                    <a href="{{ url_for('bbs.index') }}">论坛</a><em>»</em>
+                    <a href="{{ url_for('bbs.index',cid=bigc.cid) }}">{{ bigc.categoryname }}</a><em>»</em>
+                    <a href="{{ url_for('bbs.posts',cid=smallc.cid) }}">{{ smallc.categoryname }}</a>
+                </div>
+            </div>
+            <div class="boardnav">
+                <div id="ct" class="wp cl" style="margin-left:145px">
+                    <div id="sd_bdl" class="bdl" style="width:130px;margin-left:-145px">
+                        <div class="tbn" id="forumleftside"><h2 class="bdl_h">版块导航</h2>
+                            <dl class="a" id="lf_1">
+                                {% for b in categories %}
+                                    <dt><a href="" style="font-size: 1.2em;
+    font-family: initial;" title="{{ b.categoryname }}">{{ b.categoryname }}</a></dt>
+                                    {% for s in smallcategory %}
+                                        {% if s.cpid== b.cid %}
+                                            <dd {% if cid==s.cid %} class="bdl_a" {% endif %}>
+                                                <a href="{{ url_for('bbs.posts',cid=s.cid) }}" title="{{ s.categoryname }}">{{ s.categoryname }}</a>
+                                            </dd>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="mn">
+
+                        <div class="bm bml pbn">
+                            <div class="bm_h cl">
+                                <h1 class="xs2">
+                                    <a href="{{ url_for('bbs.posts',cid=smallc.cid) }}">{{ smallc.categoryname }}</a>
+                                    <span class="xs1 xw0 i">
+                                        今日: <strong class="xi1">0</strong><span class="pipe">|</span>
+                                        主题: <strong class="xi1">{{ smallc.cthemecount }}</strong>
+                                    </span>
+                                </h1>
+                            </div>
+                            <div class="bm_c cl pbn">
+                                <div>
+                                    版主: <span class="xi2">{{ smallc.cuid }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="pgt" class="bm bw0 pgs cl">
+                            <span class="pgb y">
+                                <a href="{{ url_for('bbs.index') }}">返&nbsp;回</a>
+                            </span>
+                            <a href="{{ url_for('bbs.editpost',cid = smallc.cid)}}" id="newspecial" title="发新帖">
+                                <img src="{{ url_for( 'static',filename='images/pn_post.png') }}" alt="发新帖">
+                            </a>
+                        </div>
+                        <div id="threadlist" class="tl bm bmw">
+                            <div class="th">
+                                <table cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                    <tr>
+                                        <th colspan="2">
+                                            <div class="tf">
+                                                筛选:
+                                                <a href="http://py.codingfans.cc/list.php?classid=5"
+                                                   class="xi2">全部</a><span class="pipe">|</span>
+                                                <a href="http://py.codingfans.cc/list.php?classid=5&amp;elite=1"
+                                                   class="xi2">精华</a>
+                                            </div>
+                                        </th>
+                                        <td class="by">作者</td>
+                                        <td class="num">回复/查看</td>
+                                        <td class="by">最后发表</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bm_c">
+                                <form method="post" autocomplete="off" name="moderate" id="moderate"
+                                      action="http://py.codingfans.cc/list.php?classid=5">
+                                    <table summary="forum_2" id="forum_2" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                        {% for post in posts %}
+                                            <tr>
+                                                <td class="icn">
+                                                    <a href="{{ url_for('bbs.postdetail',pid=post.pid) }}" title="新窗口打开"
+                                                       target="_blank">
+                                                        <img src="{{ url_for( 'static',filename='images/folder_common.gif') }}"></a>
+                                                </td>
+                                                <th class="common">
+                                                    <a href="{{ url_for('bbs.postdetail',pid=post.pid) }}" class="xst"
+                                                       style="color:red">{{ post.ptitle }}</a>
+                                                    <img src="{{ url_for( 'static',filename='images/digest_1.gif') }}"
+                                                         align="absmiddle" alt="digest" title="精华帖">
+                                                </th>
+                                                <td class="by">
+                                                    <cite>{{ post.puid }}</cite>
+
+                                                    <em><span
+                                                            class="xi1">{{ moment(post.pposttime).format('YYYY-MM-DD') }}</span></em>
+                                                </td>
+                                                <td class="num"><a href="http://py.codingfans.cc/detail.php?id=278"
+                                                                   class="xi2">1</a><em>26</em></td>
+                                                <td class="by">
+                                                    <cite>{{ post.plastreplyuser }}</cite><em><span
+                                                        title="2019-07-27 14:41:33">{{ moment(post.plastreplytime).fromNow() }}</span></em>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="bm bw0 pgs cl">
+                            <span class="pgb y"><a href="http://py.codingfans.cc/index.php">返&nbsp;回</a></span>
+                            <a href="{{ url_for('bbs.editpost',cid = smallc.cid)}}" id="newspecialtmp" title="发新帖">
+                                <img src="{{ url_for( 'static',filename='images/pn_post.png') }}" alt="发新帖">
+                            </a>
+                        </div>
+                        <div style="width:800px; margin:0 auto; padding:10px 0px; text-align:right">
+                            &nbsp;&nbsp;<input type="text"
+                                               onkeydown="javascript:if(event.keyCode==13){var page=(this.value&gt;9)?9:this.value;location=&#39;/list.php?classid=5&amp;page=&#39;+page+&#39;&#39;}"
+                                               value="1" style="width:25px"><input type="button" value="GO"
+                                                                                   onclick="javascript:var page=(this.previousSibling.value&gt;9)?9:this.previousSibling.value;location=&#39;/list.php?classid=5&amp;page=&#39;+page+&#39;&#39;">&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;<a
+                                href="http://py.codingfans.cc/list.php?classid=5&amp;page=2">下一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<a
+                                href="http://py.codingfans.cc/list.php?classid=5&amp;page=9">尾 页</a>&nbsp;&nbsp;&nbsp;&nbsp;共有<b>89</b>条记录&nbsp;&nbsp;&nbsp;&nbsp;每页显示<b>10</b>条，本页<b>1-10</b>条&nbsp;&nbsp;&nbsp;&nbsp;<b>1/9</b>页&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--LIST end-->
+
+    {% endblock content %}
+    {% block footer %}
+        {{ super() }}
+    {% endblock footer %}
+{% endblock body %}
+</html>

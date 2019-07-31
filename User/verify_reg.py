@@ -1,5 +1,6 @@
 import re
 
+from flask import session, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationError
@@ -28,5 +29,5 @@ class RegisterForm(FlaskForm):
         if res:
             raise ValidationError('用户名已存在！')
 
-class PersonForm(FlaskForm):
-    
+class UeditorForm(FlaskForm):
+    pass

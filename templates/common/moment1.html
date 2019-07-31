@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+{# 加载jQuery #}
+{{ moment.include_jquery() }}
+{# 加载moment.js #}
+{{ moment.include_moment() }}
+{# 设置语言言 #}
+{{ moment.locale('zh-CN') }}
+{# 简单的格式化时间显示 #}
+<div>时间:{{ moment(current_time).format('LLLL') }}</div>
+<div>时间:{{ moment(current_time).format('LLL') }}</div>
+<div>时间:{{ moment(current_time).format('LL') }}</div>
+<div>时间:{{ moment(current_time).format('L') }}</div>
+ 自自定义格式化显示
+<div>自自定义:{{ moment(current_time).format('YYYY-MM-DD HH:mm:ss')
+}}</div>
+ 显示时间差
+<div>发表于:{{ moment(current_time).fromNow() }}</div>
+
+
+</body>
+</html>
