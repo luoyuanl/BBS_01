@@ -63,7 +63,7 @@
                         </div>
                         <div id="pgt" class="bm bw0 pgs cl">
                             <span class="pgb y">
-                                <a href="{{ url_for('bbs.index') }}">返&nbsp;回</a>
+                                <a href="{{ url_for('bbs.index') }}">返回</a>
                             </span>
                             <a href="{{ url_for('bbs.editpost',cid = smallc.cid)}}" id="newspecial" title="发新帖">
                                 <img src="{{ url_for( 'static',filename='images/pn_post.png') }}" alt="发新帖">
@@ -129,7 +129,9 @@
                         </div>
 
                         <div class="bm bw0 pgs cl">
-                            <span class="pgb y"><a href="http://py.codingfans.cc/index.php">返&nbsp;回</a></span>
+                            <span class="pgb y">
+                                <a href="{{ url_for('bbs.index') }}">返回</a>
+                            </span>
                             <a href="{{ url_for('bbs.editpost',cid = smallc.cid)}}" id="newspecialtmp" title="发新帖">
                                 <img src="{{ url_for( 'static',filename='images/pn_post.png') }}" alt="发新帖">
                             </a>

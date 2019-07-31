@@ -3,98 +3,116 @@
     {{ super() }}
     <title>{{ title }}</title>
 {% endblock head %}
-    {% block body %}
-        {% block navbar %}
-            {{ super() }}
-        {% endblock navbar %}
-        {% block content %}
-<!--REG START-->
-            <div id="wp" class="wp">
-                <div id="ct" class="ptm wp cl">
-                    <div class="mn">
-                        <div class="bm" id="main_message">
-                            <div class="bm_h bbs" id="main_hnav">
-                                <h3 id="layer_reginfo_t" class="xs2">立即注册</h3>
+{% block body %}
+    {% block navbar %}
+        {{ super() }}
+    {% endblock navbar %}
+    {% block content %}
+        <!--REG START-->
+        <div id="wp" class="wp">
+            <div id="ct" class="ptm wp cl">
+                <div class="mn">
+                    <div class="bm" id="main_message">
+                        <div class="bm_h bbs" id="main_hnav">
+                            <h3 id="layer_reginfo_t" class="xs2">立即注册</h3>
+                        </div>
+                        <p id="returnmessage4"></p>
+                        {# 定义表单宏 #}
+                        {% macro filed(att) %}
+                            <div class="rfm">
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <th><span class="rq">*</span>{{ att.label() }}</th>
+                                        <td>{{ att() }}</td>
+                                        {% for error in att.errors %}
+                                            <td class="tipcol"><b id="tip_5sMVeV" class=""
+                                                                  style="color:red">{{ error }}</b></td>
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <p id="returnmessage4"></p>
-                            {# 定义表单宏 #}
-                                {% macro filed(att) %}
+                        {% endmacro %}
+                        <form method="post" autocomplete="off" name="register" id="registerform"
+                              action="{{ url_for('bbs.user_register') }}">
+                            {{ form.csrf_token }}
+                            <div id="layer_reg" class="bm_c">
+                                <div class="mtw">
+                                    <div id="reginfo_a">
+                                        {{ filed(form.username) }}
+                                        {{ filed(form.passsword) }}
+                                        {{ filed(form.confirm_password) }}
+                                        {{ filed(form.email) }}
                                     <div class="rfm">
                                         <table>
-                                            <tbody>
                                             <tr>
-                                                <th><span class="rq">*</span>{{ att.label() }}</th>
-                                                <td>{{ att() }}</td>
-                                                {% for error in att.errors %}
-                                                    <td class="tipcol"><b id="tip_5sMVeV" class="" style="color:red">{{ error }}</b></td>
-                                                {% endfor %}
+                                                <th><span class="rq">*</span><label for="yzm">验证码:</label></th>
+                                                <td>
+                                                    <input style="width:50px;" maxlength="4" type="text"
+                                                           id="yzm" name="yzm" onfocus="checkReg('yzm')" size="25"
+                                                           class="px"/><br/>
+                                                    <em id="emailmore">&nbsp;</em>
+                                                </td>
+                                                <td class="tipcol">
+                                                    <i id="tip_yzm" class="p_tip"><img
+                                                            src="{{ url_for('bbs.generate_code') }}" id="p_yzm"
+                                                            onclick="this.src='{{ url_for('bbs.generate_code') }}?'+Math.random()"
+                                                            style="cursor:pointer"/>
+                                                        <a href=" " onclick="this.src='{{ url_for('bbs.generate_code') }}?'+Math.random()">看不清？
+                                                        {% if error==1 %}验证码输入有误{% endif %}
+                                                        </a>
+                                                    </i>
+                                                </td>
                                             </tr>
-                                            </tbody>
                                         </table>
                                     </div>
-                                {% endmacro %}
-                            <form method="post" autocomplete="off" name="register" id="registerform" action="{{ url_for('bbs.user_register') }}">
-                            {{ form.csrf_token }}
-                                <div id="layer_reg" class="bm_c">
-                                    <div class="mtw">
-                                        <div id="reginfo_a">
-                                            {{ filed(form.username) }}
-                                            {{ filed(form.passsword) }}
-                                            {{ filed(form.confirm_password) }}
-                                            {{ filed(form.email) }}
-                                    <div class="rfm mbw bw0">
-                                        <table width="100%">
-                                            <tbody>
-                                            <tr>
-                                                <th>
-                                                    <input type="text" name="yzm">
-{#                                                    <img src="/code/" alt="" onclick="this.src='/code/?'+Math.random()">#}
-                                                </th>
-                                                <td>
-                                                    <img src="/code/" alt="" onclick="this.src='/code/?'+Math.random()">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span id="reginfo_a_btn"><em>&nbsp;</em>
-                                                    <button class="pn pnc" id="registerformsubmit" type="submit" name="regsubmit" value="true">
-                                                        <strong>提交</strong>
-                                                    </button>
+                                        <div class="rfm mbw bw0">
+                                            <table width="100%">
+                                                <tbody>
+                                                <tr>
+                                                    <th></th>
+                                                    <td></td>
+                                                    <td>
+                                                        <span id="reginfo_a_btn"><em>&nbsp;</em>
+                                                        <button class="pn pnc" id="registerformsubmit" type="submit" name="regsubmit" value="true">
+                                                            <strong>提交</strong>
+                                                        </button>
                                                     </span>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <script>
-            function checkReg(obj){
-                document.getElementById('tip_'+obj).style.display='block';
+        </div>
+        <script>
+            function checkReg(obj) {
+                document.getElementById('tip_' + obj).style.display = 'block';
             }
 
-            function checkRegOut(obj,test){
-                if(document.getElementById(obj).value==''){
-                    document.getElementById('tip_'+obj).innerHTML='<b style="color:red;">'+test+'</b>';
-                }else{
-                    document.getElementById('tip_'+obj).style.display='none';
+            function checkRegOut(obj, test) {
+                if (document.getElementById(obj).value == '') {
+                    document.getElementById('tip_' + obj).innerHTML = '<b style="color:red;">' + test + '</b>';
+                } else {
+                    document.getElementById('tip_' + obj).style.display = 'none';
                 }
             }
 
-            function show(obj){
-                document.getElementById(obj).src='verify.php?math='+Math.random();
+            function show(obj) {
+                document.getElementById(obj).src = 'verify.php?math=' + Math.random();
             }
-            </script>
-<!--REG END-->
- {% endblock content %}
-        {% block footer %}
-            {{ super() }}
-        {% endblock footer %}
-    {% endblock body %}
+        </script>
+        <!--REG END-->
+    {% endblock content %}
+    {% block footer %}
+        {{ super() }}
+    {% endblock footer %}
+{% endblock body %}
 </html>

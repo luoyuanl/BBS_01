@@ -47,7 +47,7 @@ class User(db.Model, BaseModel):
     username = db.Column(db.String(60), unique=True, nullable=False)
     upassword = db.Column(db.String(128), nullable=False)
     uemail = db.Column(db.String(300))
-    usafequestion = db.Column(db.Integer)
+    usafequestion = db.Column(db.String(300))
     usafeanswer = db.Column(db.String(300))
     ugender = db.Column(db.Integer, default=0)
     ubirthday = db.Column(db.DATE)
@@ -63,6 +63,11 @@ class User(db.Model, BaseModel):
     uregtime = db.Column(db.DATETIME,default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     uisactive = db.Column(db.Boolean, default=False)
     uposts = db.relationship('Posts', backref='user', lazy='dynamic', cascade='delete')
+
+    def editpost(self):
+        self.umoney += 50
+        self.uscore += 5
+        self.save_one()
 
     # # get password
     # @property
@@ -99,6 +104,11 @@ class Category(db.Model, BaseModel):
     lastreplyuser = db.Column(db.String(60))
     lastreplytime = db.Column(db.DATETIME)
 
+    def editpost(self,name):
+        self.cthemecount +=1
+        self.lastpostname =name
+        self.save_one()
+
     # 获取所有大板块
     @classmethod
     def get_big(cls):
@@ -121,7 +131,7 @@ class Posts(db.Model, BaseModel):
     pid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     ptitle = db.Column(db.String(200), nullable=False)
     pcontent = db.Column(db.String(20000))
-    pposttime = db.Column(db.DateTime, default=datetime.now)
+    pposttime = db.Column(db.DateTime, default=datetime.now())
     pistop = db.Column(db.Boolean, default=False)
     pislight = db.Column(db.Boolean, default=False)
     piselite = db.Column(db.Boolean, default=False)
@@ -130,10 +140,11 @@ class Posts(db.Model, BaseModel):
     preplycount = db.Column(db.Integer, default=0)
     plastreplyuser = db.Column(db.String(60))
     plastreplytime = db.Column(db.DateTime)
-    pprice = db.Column(db.Integer)
+    pprice = db.Column(db.Integer,default=0)
     puid = db.Column(db.Integer, db.ForeignKey('bbs_user.uid'))
     pcid = db.Column(db.Integer, db.ForeignKey('bbs_category.cid'), nullable=False, default=3)
-    preply = db.relationship('Replies', backref='post', lazy='dynamic', cascade='delete')
+    preplies = db.relationship('Replies', backref='post', lazy='dynamic', cascade='delete')
+
 
 
 class Replies(db.Model, BaseModel):

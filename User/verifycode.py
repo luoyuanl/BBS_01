@@ -51,7 +51,7 @@ class VerifyCode:
             self.pen.point([(x, y)], fill=self.__rand_color(60, 120))
 
     def __draw_string(self):
-        font1 = ImageFont.truetype('FreeSansBold.ttf', size=20, encoding='utf-8')
+        font1 = ImageFont.truetype('CENTURY.TTF', size=20, encoding='utf-8')
         width = (self.width - 20) / self.size
         for i in range(len(self.__code)):
             x = 13 + i * width
@@ -66,7 +66,7 @@ class VerifyCode:
         return randint(low, high), randint(low, high), randint(low, high)
 
 
-# if __name__ == "__main__":
-#     vc = VerifyCode()
-#     vc.output()
-#     print(vc.code)
+if __name__ == "__main__":
+    vc = VerifyCode()
+    vc.output()
+    print(vc.code)

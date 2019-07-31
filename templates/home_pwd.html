@@ -13,15 +13,15 @@
         <div id="wp" class="wp">
             <div id="pt" class="bm cl">
                 <div class="z">
-                    <a href="{{ url_for('bbs.index') }}" class="nvhm" title="首页">密码安全 - 10分钟学院</a> <em>›</em><a
-                        href="{{ url_for('bbs.person_info') }}">设置</a> <em>›</em>修改头像
+                    <a href="{{ url_for('bbs.index') }}" class="nvhm" title="首页">密码安全 - 10分钟学院</a> <em>›</em>
+                    <a href="{{ url_for('bbs.person_info') }}">设置</a> <em>›</em>修改头像
                 </div>
             </div>
             <div id="ct" class="ct2_a wp cl">
                 <div class="mn">
                     <div class="bm bw0">
                         <p class="bbda pbm mbm">您必须填写旧密码才能修改下面的资料</p>
-                        <form action="http://py.codingfans.cc/home_pass.php" method="post" autocomplete="off">
+                        <form action="{{ url_for('bbs.person_psdsafe') }}" method="post" autocomplete="off">
                             <table summary="个人资料" cellspacing="0" cellpadding="0" class="tfm">
                                 <tbody>
                                 <tr>
@@ -45,12 +45,10 @@
                                 <tr id="contact">
                                     <th>Email</th>
                                     <td>
-                                        <input type="text" name="emailnew" id="emailnew" value="lycc@123.com"
-                                               class="px">
+                                        <input type="text" name="emailnew" id="emailnew" value="lycc@123.com" class="px">
                                         <p class="d">取回密码时使用</p>
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <th>安全提问</th>
                                     <td>
@@ -68,7 +66,6 @@
                                         <p class="d">如果您启用安全提问，登录时需填入相应的项目才能登录 </p>
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <th>回答</th>
                                     <td>
@@ -87,10 +84,8 @@
                             </table>
                         </form>
 
-
                     </div>
                 </div>
-
                 <div class="appl">
                     <div class="tbn">
                         <h2 class="mt bbda">设置</h2>
