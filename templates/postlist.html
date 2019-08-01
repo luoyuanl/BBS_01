@@ -57,7 +57,7 @@
                             </div>
                             <div class="bm_c cl pbn">
                                 <div>
-                                    版主: <span class="xi2">{{ smallc.cuid }}</span>
+                                    版主: <span class="xi2">{{ smallc.ccompere }}</span>
                                 </div>
                             </div>
                         </div>
@@ -109,16 +109,17 @@
                                                          align="absmiddle" alt="digest" title="精华帖">
                                                 </th>
                                                 <td class="by">
-                                                    <cite>{{ post.puid }}</cite>
+                                                    <cite>{{ post.puser }}</cite>
 
                                                     <em><span
                                                             class="xi1">{{ moment(post.pposttime).format('YYYY-MM-DD') }}</span></em>
                                                 </td>
-                                                <td class="num"><a href="http://py.codingfans.cc/detail.php?id=278"
-                                                                   class="xi2">1</a><em>26</em></td>
+                                                <td class="num">
+                                                    <a href="{{ url_for('bbs.postdetail',pid=post.pid) }}" class="xi2">{{ post.preplycount }}</a>
+                                                    <em>26</em></td>
                                                 <td class="by">
-                                                    <cite>{{ post.plastreplyuser }}</cite><em><span
-                                                        title="2019-07-27 14:41:33">{{ moment(post.plastreplytime).fromNow() }}</span></em>
+                                                    <cite>{{ post.plastreplyuser }}</cite><em>
+                                                    <span title="2019-07-27 14:41:33">{{ moment(post.plastreplytime).fromNow() }}</span></em>
                                                 </td>
                                             </tr>
                                         {% endfor %}

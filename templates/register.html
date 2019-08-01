@@ -26,8 +26,9 @@
                                         <th><span class="rq">*</span>{{ att.label() }}</th>
                                         <td>{{ att() }}</td>
                                         {% for error in att.errors %}
-                                            <td class="tipcol"><b id="tip_5sMVeV" class=""
-                                                                  style="color:red">{{ error }}</b></td>
+                                            <td class="tipcol">
+                                                <b id="tip_5sMVeV" class="" style="color:red">{{ error }}</b>
+                                            </td>
                                         {% endfor %}
                                     </tr>
                                     </tbody>
@@ -35,7 +36,7 @@
                             </div>
                         {% endmacro %}
                         <form method="post" autocomplete="off" name="register" id="registerform"
-                              action="{{ url_for('bbs.user_register') }}">
+                              action="{{ url_for('user.user_register') }}">
                             {{ form.csrf_token }}
                             <div id="layer_reg" class="bm_c">
                                 <div class="mtw">
@@ -55,11 +56,11 @@
                                                     <em id="emailmore">&nbsp;</em>
                                                 </td>
                                                 <td class="tipcol">
-                                                    <i id="tip_yzm" class="p_tip"><img
-                                                            src="{{ url_for('bbs.generate_code') }}" id="p_yzm"
-                                                            onclick="this.src='{{ url_for('bbs.generate_code') }}?'+Math.random()"
+                                                    <i id="tip_yzm" class="p_tip">
+                                                        <img src="{{ url_for('user.generate_code') }}" id="p_yzm"
+                                                            onclick="this.src='{{ url_for('user.generate_code') }}?'+Math.random()"
                                                             style="cursor:pointer"/>
-                                                        <a href=" " onclick="this.src='{{ url_for('bbs.generate_code') }}?'+Math.random()">看不清？
+                                                        <a href=" " onclick="this.src='{{ url_for('user.generate_code') }}?'+Math.random()">看不清？
                                                         {% if error==1 %}验证码输入有误{% endif %}
                                                         </a>
                                                     </i>

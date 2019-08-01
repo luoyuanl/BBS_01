@@ -54,7 +54,7 @@ class User(db.Model, BaseModel):
     urealname = db.Column(db.String(60), nullable=True)
     unativeplace = db.Column(db.String(128))
     uqqnum = db.Column(db.String(15))
-    uphoto = db.Column(db.String(200), default='static/images/avatar_blank')
+    uphoto = db.Column(db.String(200), default='/static/images/avatar_blank')
     usignature = db.Column(db.String(300))
     umoney = db.Column(db.Integer,default=50)
     uscore = db.Column(db.Integer,default=50)
@@ -62,32 +62,22 @@ class User(db.Model, BaseModel):
     ulevel = db.Column(db.String(128),default='小学生')
     uregtime = db.Column(db.DATETIME,default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     uisactive = db.Column(db.Boolean, default=False)
-    uposts = db.relationship('Posts', backref='user', lazy='dynamic', cascade='delete')
+
+    def login(self):
+        self.umoney += 10
+        self.uscore += 1
+        self.save_one()
 
     def editpost(self):
+        # 发帖加50金币，5积分
         self.umoney += 50
         self.uscore += 5
         self.save_one()
 
-    # # get password
-    # @property
-    # def upassword(self):
-    #     return self.upassword
-    #
-    # # set password
-    # @upassword.setter
-    # def upassword(self, value):
-    #     """
-    #     :param value: 明文密码
-    #     :return:
-    #     """
-    #     self.upassword = generate_password_hash
-
-    # def check_password(self, value):
-    #     return check_password_hash(self.password_hash, value)
-    #
-    # def __str__(self):
-    #     return self.username + '___' + self.password_hash
+    def replypost(self):
+        self.umoney += 10
+        self.uscore += 2
+        self.save_one()
 
 
 class Category(db.Model, BaseModel):
@@ -99,14 +89,19 @@ class Category(db.Model, BaseModel):
     creplycount = db.Column(db.Integer, default=0)
     ccompere = db.Column(db.String(60))
     cstartdate = db.Column(db.DATE,default=datetime.today())
-    cpost = db.relationship('Posts', backref='category', lazy='dynamic', cascade='delete')
     lastpostname = db.Column(db.String(200))
     lastreplyuser = db.Column(db.String(60))
     lastreplytime = db.Column(db.DATETIME)
 
-    def editpost(self,name):
-        self.cthemecount +=1
-        self.lastpostname =name
+    def editpost(self,username):
+        self.cthemecount += 1
+        self.lastpostname = username
+        self.save_one()
+
+    def replypost(self,username):
+        self.creplycount +=1
+        self.lastreplytime=datetime.now()
+        self.lastreplyuser = username
         self.save_one()
 
     # 获取所有大板块
@@ -141,10 +136,14 @@ class Posts(db.Model, BaseModel):
     plastreplyuser = db.Column(db.String(60))
     plastreplytime = db.Column(db.DateTime)
     pprice = db.Column(db.Integer,default=0)
-    puid = db.Column(db.Integer, db.ForeignKey('bbs_user.uid'))
-    pcid = db.Column(db.Integer, db.ForeignKey('bbs_category.cid'), nullable=False, default=3)
-    preplies = db.relationship('Replies', backref='post', lazy='dynamic', cascade='delete')
+    puser = db.Column(db.String(60))
+    pcid = db.Column(db.Integer, nullable=False, default=3)
 
+    def replypost(self,username,replytime):
+        self.preplycount +=1
+        self.plastreplyuser = username
+        self.plastreplytime = replytime
+        self.save_one()
 
 
 class Replies(db.Model, BaseModel):
@@ -152,7 +151,8 @@ class Replies(db.Model, BaseModel):
     rid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     rcontent = db.Column(db.String(20000), nullable=False)
     rfloor = db.Column(db.Integer, autoincrement=True)
-    ruid = db.Column(db.Integer, db.ForeignKey('bbs_user.uid'), nullable=False)
-    rdatetime = db.Column(db.DateTime)
+    rdatetime = db.Column(db.DateTime,default=datetime.now())
     rpid = db.Column(db.Integer, db.ForeignKey('bbs_posts.pid'), nullable=False)
-    # rusername = db.Column(db.String(60))
+    rusername = db.Column(db.String(60))
+
+

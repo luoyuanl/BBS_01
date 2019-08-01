@@ -14,14 +14,14 @@
             <div id="pt" class="bm cl">
                 <div class="z">
                     <a href="{{ url_for('bbs.index') }}" class="nvhm" title="首页">密码安全 - 10分钟学院</a> <em>›</em>
-                    <a href="{{ url_for('bbs.person_info') }}">设置</a> <em>›</em>修改头像
+                    <a href="{{ url_for('user.person_info') }}">设置</a> <em>›</em>修改头像
                 </div>
             </div>
             <div id="ct" class="ct2_a wp cl">
                 <div class="mn">
                     <div class="bm bw0">
                         <p class="bbda pbm mbm">您必须填写旧密码才能修改下面的资料</p>
-                        <form action="{{ url_for('bbs.person_psdsafe') }}" method="post" autocomplete="off">
+                        <form action="{{ url_for('user.person_psdsafe') }}" method="post" autocomplete="off">
                             <table summary="个人资料" cellspacing="0" cellpadding="0" class="tfm">
                                 <tbody>
                                 <tr>
@@ -54,7 +54,7 @@
                                     <td>
                                         <select name="questionidnew" id="questionidnew">
                                             <option selected="">保持原有的安全提问和答案</option>
-                                            <option>无安全提问</option>
+                                            <option value="None">无安全提问</option>
                                             <option>母亲的名字</option>
                                             <option>爷爷的名字</option>
                                             <option>父亲出生的城市</option>
@@ -90,10 +90,10 @@
                     <div class="tbn">
                         <h2 class="mt bbda">设置</h2>
                         <ul>
-                            <li><a href="{{ url_for('bbs.person_protrait') }}">修改头像</a></li>
-                            <li><a href="{{ url_for('bbs.person_info') }}">个人资料</a></li>
-                            <li><a href="{{ url_for('bbs.person_signature') }}">个人签名</a></li>
-                            <li class="a"><a href="{{ url_for('bbs.person_psdsafe') }}">密码安全</a></li>
+                            <li><a href="{{ url_for('user.person_protrait') }}">修改头像</a></li>
+                            <li><a href="{{ url_for('user.person_info') }}">个人资料</a></li>
+                            <li><a href="{{ url_for('user.person_signature') }}">个人签名</a></li>
+                            <li class="a"><a href="{{ url_for('user.person_psdsafe') }}">密码安全</a></li>
                             <!--<li><a href="home_sc.php">收藏管理</a></li>-->
                         </ul>
                     </div>

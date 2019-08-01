@@ -1,0 +1,120 @@
+{% extends 'common/Base.html' %}
+{% block head %}
+    {{ super() }}
+    <title>{{ title }}</title>
+{% endblock head %}
+    {% block body %}
+        {% block navbar %}
+            {{ super() }}
+        {% endblock navbar %}
+        {% block content %}
+<!--close START-->
+<div class="nfl" id="main_message">
+    <div class="f_c altw">
+        <div id="messagetext" class="alert_info">
+            <p>抱歉，您尚未登录，没有权限在该版块发帖,请先登录</p>
+        </div>
+        <div id="messagelogin"></div>
+        <div id="main_messaqge_LAPpm">
+            <div id="layer_login_LAPpm">
+                <h3 class="flb">
+                    <em id="returnmessage_LAPpm">用户登录</em>
+                    <span></span>
+                </h3>
+                <form method="post" autocomplete="off" name="login" id="loginform_LAPpm" class="cl"action="{{ url_for('user.dologin') }}">
+                    <div class="c cl">
+                        <div class="rfm">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th><label for="username_LAPpm">用户名:</label></th>
+                                    <td><input type="text" name="username" id="username_LAPpm" autocomplete="on" size="30" class="px p_fre"></td>
+                                    <td class="tipcol"><a href="{{ url_for('user.user_register') }}">立即注册</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="rfm">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th><label for="password3_LAPpm">密码:</label></th>
+                                    <td><input type="password" id="password3_LAPpm" name="password" size="30" class="px p_fre"></td>
+                                    <td class="tipcol"><a href="{{ url_for('user.getpass') }}" title="找回密码">找回密码</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="rfm">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th>安全提问:</th>
+                                    <td>
+                                        <select id="loginquestionid_LAPpm" width="213" name="safequestion">
+                                        <option value="None">安全提问(未设置请忽略)</option>
+                                        <option>母亲的名字</option>
+                                        <option>爷爷的名字</option>
+                                        <option>父亲出生的城市</option>
+                                        <option>你其中一位老师的名字</option>
+                                        <option>你个人计算机的型号</option>
+                                        <option>你最喜欢的餐馆名称</option>
+                                        <option>驾驶执照最后四位数字</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="rfm" id="loginanswer_row_LAPpm">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th>答案:</th>
+                                    <td><input type="text" name="safeanswer" id="loginanswer_LAPpm" autocomplete="off" size="30" class="px p_fre"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="rfm  bw0">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th></th>
+                                    <td>
+                                        <label for="cookietime_LAPpm">
+                                        <input type="checkbox" class="pc" name="cookietime" id="cookietime_LAPpm" tabindex="1" value="true">自动登录
+                                        </label>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="rfm mbw bw0">
+                            <table width="100%">
+                                <tbody>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <td>
+                                        <button class="pn pnc" type="submit" name="loginsubmit" value="true" tabindex="1">
+                                            <strong>登录</strong>
+                                        </button>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--close END-->
+        {% endblock content %}
+        {% block footer %}
+            {{ super() }}
+        {% endblock footer %}
+    {% endblock body %}
+</html>

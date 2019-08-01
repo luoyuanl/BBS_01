@@ -5,6 +5,6 @@ us = Blueprint('us', __name__, '/user/')
 def check_login(func):
     def inner(*args, **kwargs):
         if 'uid' not in session:
-            return redirect(url_for('bbs.login'))
+            return redirect(url_for('user.login'))
         return func(*args, **kwargs)
     return inner

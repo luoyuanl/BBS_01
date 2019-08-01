@@ -9,13 +9,11 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/editor.css') }}">
     {% endblock css %}
     {% block script %}
-        <script type="text/javascript" src="{{ url_for('static',filename='js/config.js.下载') }}"></script>
-		<script type="text/javascript" src="{{ url_for('static',filename='js/zh-cn.js.下载') }}"></script>
-		<script type="text/javascript" src="{{ url_for('static',filename='js/default.js.下载') }}"></script>
+{#        <script type="text/javascript" src="{{ url_for('static',filename='js/config.js.下载') }}"></script>#}
+{#		<script type="text/javascript" src="{{ url_for('static',filename='js/zh-cn.js.下载') }}"></script>#}
+{#		<script type="text/javascript" src="{{ url_for('static',filename='js/default.js.下载') }}"></script>#}
         <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='ueditor/ueditor.config.js') }}"></script>
         <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='ueditor/ueditor.all.min.js') }}"></script>
-        {#<!--建议⼿动加在语⾔，避免在ie下有时因为加载语⾔失败导致编辑器加载失败-->#}
-        {#<!--这⾥加载的语⾔⽂件会覆盖你在配置项⽬⾥添加的语⾔类型，⽐如你在配置项⽬⾥配置的是英⽂，这⾥加载的中⽂，那最后就是中⽂-->#}
         <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='ueditor/lang/zh-cn/zh-cn.js') }}"></script>
     {% endblock %}
 {% endblock head %}
@@ -24,9 +22,6 @@
         {{ super() }}
     {% endblock navbar %}
     {% block content %}
-        {{ moment.include_jquery() }}{{ moment.include_moment() }}{{ moment.locale('zh-CN') }}
-        <!--HEAD end-->
-
         <!--LIST start-->
         <div id="wp" class="wp">
             <div id="pt" class="bm cl">
@@ -35,11 +30,9 @@
                     <a href="{{ url_for('bbs.index') }}">论坛</a><em>»</em>
                     <a href="{{ url_for('bbs.index',cid=bigc.cid) }}">{{ bigc.categoryname }}</a><em>»</em>
                     <a href="{{ url_for('bbs.posts',cid=smallc.cid) }}">{{ smallc.categoryname }}</a><em>»</em>发表帖子
-
                 </div>
             </div>
-            {#    编辑器#}
-            <form method="post" autocomplete="off" id="postform" action="{{ url_for('bbs.editpost',cid=smallc.cid) }}">
+            <form method="post" autocomplete="off" id="postform"  action="{{ url_for('bbs.editpost',cid=smallc.cid) }} ">
                 <div id="ct" class="ct2_a ct2_a_r wp cl">
                     <div class="mn">
                         <div class="bm bw0 cl" id="editorbox">
@@ -53,11 +46,11 @@
                                     <input type="text" name="subject" id="subject" class="px"
                                            onkeyup="showLength(this,'checklen',80);" style="width: 25em" tabindex="1">
                                 </span>
-                                        <span id="subjectchk">还可输入<strong id="checklen">80</strong> 个字符</span>
+                                        <span id="subjectchk">还可输入<strong id="checklen">80</strong>个字符</span>
                                     </div>
                                 </div>
                                 <div id="e_body_loading">
-                                    <script id="editor" type="text/plain"></script>
+                                    <script id="editor" type="text/plain" name="mycontent"></script>
                                     <script type="text/javascript">
                                         var ue = UE.getEditor('editor', {serverUrl: "/upload/"});
                                     </script>

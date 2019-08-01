@@ -42,7 +42,7 @@
                 <div class="hdc cl">
                     <h2><a href="" title="首页 - 10分钟学院">
                         <img src="{{ url_for('static',filename='images/logo.jpg') }}" height="80" border="0"></a></h2>
-                    <form method="post" autocomplete="off" id="lsform" action="{{ url_for('bbs.user_login') }}">
+                    <form method="post" autocomplete="off" id="lsform" action="{{ url_for('user.user_login') }}">
                         <div class="fastlg cl">
                             <div class="y pns">
                                 <table cellspacing="0" cellpadding="0">
@@ -63,7 +63,7 @@
                                             <td class="fastlg_l">
                                                 <button type="submit" class="pn vm" name="loginsubmit" value="true" style="width:75px;"><em>登录</em></button>
                                             </td>
-                                            <td><a href="{{ url_for('bbs.user_register') }}" class="xi2 xw1">立即注册</a></td>
+                                            <td><a href="{{ url_for('user.user_register') }}" class="xi2 xw1">立即注册</a></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -82,9 +82,9 @@
                         </div>
                         <p>
                             <strong class="vwmy"><a href="home.php" target="_blank">{{ session['username'] }}</a></strong>
-                            <span class="pipe">|</span><a href="{{ url_for('bbs.person_protrait') }}">设置</a>
+                            <span class="pipe">|</span><a href="{{ url_for('user.person_protrait') }}">设置</a>
                             <span class="pipe">|</span><a href="" target="_blank">管理中心</a>
-                            <span class="pipe">|</span><a href="{{ url_for('bbs.user_logout') }}">退出</a>
+                            <span class="pipe">|</span><a href="{{ url_for('user.user_logout') }}">退出</a>
                         </p>
                         <p>
                             <a id="extcreditmenu" href="{{ url_for('bbs.index') }}">积分：{{ session['uscore'] }}</a>

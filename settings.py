@@ -1,10 +1,10 @@
 # 数据库配置
 import os
 
-# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:524107@10.0.108.41/bbs_data'
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:524107@10.0.108.41/bbs_data'
 
 
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:524107@192.168.249.199:3306/bbs_data'
+# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:524107@192.168.249.199:3306/bbs_data'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 DEBUG = True
 SECRET_KEY = 'DSAG3842AS'
