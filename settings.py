@@ -1,10 +1,12 @@
 # 数据库配置
 import os
 
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:524107@10.0.108.41/bbs_data'
+# 桥接有线网卡
+# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:524107@10.0.108.41/bbs_data'
 
+# 桥接无线网卡
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:524107@192.168.249.199:3306/bbs_data'
 
-# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:524107@192.168.249.199:3306/bbs_data'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 DEBUG = True
 SECRET_KEY = 'DSAG3842AS'
@@ -23,4 +25,4 @@ MAIL_PASSWORD = '授权码'
 
 # file-uploads文件上传设置
 UPLOADED_PHOTOS_DEST = os.path.join(os.getcwd(), 'static/upload')
-MAX_CONTENT_LENGTH = 2 * 1024 * 1024  # 图片大小
+MAX_CONTENT_LENGTH = 2 * 1024 * 1024

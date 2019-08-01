@@ -1,8 +1,7 @@
 # 创建模型
 from datetime import datetime
 
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import session
 
 from ext import db
 
@@ -45,25 +44,27 @@ class User(db.Model, BaseModel):
     __tablename__ = 'bbs_user'
     uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(60), unique=True, nullable=False)
-    upassword = db.Column(db.String(128), nullable=False)
-    uemail = db.Column(db.String(300))
-    usafequestion = db.Column(db.String(300))
-    usafeanswer = db.Column(db.String(300))
-    ugender = db.Column(db.Integer, default=0)
-    ubirthday = db.Column(db.DATE)
-    urealname = db.Column(db.String(60), nullable=True)
-    unativeplace = db.Column(db.String(128))
-    uqqnum = db.Column(db.String(15))
-    uphoto = db.Column(db.String(200), default='/static/images/avatar_blank')
-    usignature = db.Column(db.String(300))
-    umoney = db.Column(db.Integer,default=50)
-    uscore = db.Column(db.Integer,default=50)
-    ustatus = db.Column(db.String(60),default='游客')
-    ulevel = db.Column(db.String(128),default='小学生')
-    uregtime = db.Column(db.DATETIME,default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    uisactive = db.Column(db.Boolean, default=False)
+    password = db.Column(db.String(128), nullable=False)
+    email = db.Column(db.String(300),nullable=False)
+    safequestion = db.Column(db.String(300),default='None')
+    safeanswer = db.Column(db.String(300),default='None')
+    gender = db.Column(db.Integer, default=0)   # 0未填写，1男，2女
+    birthday = db.Column(db.DATE)
+    realname = db.Column(db.String(60))
+    nativeplace = db.Column(db.String(128))
+    qqnum = db.Column(db.String(15))
+    photo = db.Column(db.String(200), default='/static/upload/20190731143342.png')
+    signature = db.Column(db.String(300))
+    money = db.Column(db.Integer, default=50)
+    score = db.Column(db.Integer, default=50)
+    type = db.Column(db.String(60), default='游客')   # 游客、版主、管理员
+    level = db.Column(db.String(128), default='小学生')
+    regtime = db.Column(db.DATETIME, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    isactive = db.Column(db.Boolean, default=False)
+    lastlogintime = db.Column(db.DATETIME,default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     def login(self):
+        # 登录加10金币，1积分,没有判断每日登录
         self.umoney += 10
         self.uscore += 1
         self.save_one()
@@ -75,9 +76,20 @@ class User(db.Model, BaseModel):
         self.save_one()
 
     def replypost(self):
+        # 回帖加10金币，2积分
         self.umoney += 10
         self.uscore += 2
         self.save_one()
+
+    def setsession(self):
+        # 登陆成功设置session
+        session.permanent = True
+        session['uid'] = self.uid
+        session['username'] = self.username
+        session['uscore'] = self.uscore
+        session['uphoto'] = self.uphoto
+        session['ustatus'] = self.ustatus
+        session['ulevel'] = self.ulevel
 
 
 class Category(db.Model, BaseModel):
@@ -87,20 +99,20 @@ class Category(db.Model, BaseModel):
     cpid = db.Column(db.Integer, default=False, nullable=False)
     cthemecount = db.Column(db.Integer, default=0)
     creplycount = db.Column(db.Integer, default=0)
-    ccompere = db.Column(db.String(60))
-    cstartdate = db.Column(db.DATE,default=datetime.today())
-    lastpostname = db.Column(db.String(200))
-    lastreplyuser = db.Column(db.String(60))
-    lastreplytime = db.Column(db.DATETIME)
+    compere = db.Column(db.String(60))
+    startdate = db.Column(db.DATE, default=datetime.today())
+    clastpostname = db.Column(db.String(200))
+    clastreplyuser = db.Column(db.String(60))
+    clastreplytime = db.Column(db.DATETIME)
 
-    def editpost(self,username):
+    def editpost(self, username):
         self.cthemecount += 1
         self.lastpostname = username
         self.save_one()
 
-    def replypost(self,username):
-        self.creplycount +=1
-        self.lastreplytime=datetime.now()
+    def replypost(self, username):
+        self.creplycount += 1
+        self.lastreplytime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self.lastreplyuser = username
         self.save_one()
 
@@ -126,7 +138,7 @@ class Posts(db.Model, BaseModel):
     pid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     ptitle = db.Column(db.String(200), nullable=False)
     pcontent = db.Column(db.String(20000))
-    pposttime = db.Column(db.DateTime, default=datetime.now())
+    pposttime = db.Column(db.DateTime, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     pistop = db.Column(db.Boolean, default=False)
     pislight = db.Column(db.Boolean, default=False)
     piselite = db.Column(db.Boolean, default=False)
@@ -135,14 +147,14 @@ class Posts(db.Model, BaseModel):
     preplycount = db.Column(db.Integer, default=0)
     plastreplyuser = db.Column(db.String(60))
     plastreplytime = db.Column(db.DateTime)
-    pprice = db.Column(db.Integer,default=0)
+    pprice = db.Column(db.Integer, default=0)
     puser = db.Column(db.String(60))
     pcid = db.Column(db.Integer, nullable=False, default=3)
 
-    def replypost(self,username,replytime):
-        self.preplycount +=1
+    def replypost(self, username):
+        self.preplycount += 1
         self.plastreplyuser = username
-        self.plastreplytime = replytime
+        self.plastreplytime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self.save_one()
 
 
@@ -150,9 +162,7 @@ class Replies(db.Model, BaseModel):
     __tablename__ = 'bbs_replies'
     rid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     rcontent = db.Column(db.String(20000), nullable=False)
-    rfloor = db.Column(db.Integer, autoincrement=True)
-    rdatetime = db.Column(db.DateTime,default=datetime.now())
+    isshielded = db.Column(db.Boolean, default=False)
+    rdatetime = db.Column(db.DateTime, default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     rpid = db.Column(db.Integer, db.ForeignKey('bbs_posts.pid'), nullable=False)
     rusername = db.Column(db.String(60))
-
-

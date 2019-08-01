@@ -91,36 +91,34 @@
                             <tr>
                                 <td class="pls" rowspan="2">
                                     <div class="pi">
-                                        <div class="authi"><a href="" target="_blank" class="xw1">{{ post.puser }}</a>
+                                        <div class="authi">
+                                            <a href="" target="_blank" class="xw1">{{ post.puser }}</a>
                                         </div>
                                     </div>
                                     <!--显示用户信息 START-->
                                     <div class="p_pop blk bui" id="userinfo225" style="display:none; margin-top: -11px;"
-                                         onmouseout="showdpic('userinfo','225')">
+                                         onmouseout="showdpic('userinfo','{{ postuser.uid }}')">
                                         <div class="m z">
                                             <div id="userinfo225_ma">
-                                                <img src="{{ url_for('static',filename='images/yh_5d36d64f0c2c8.gif') }}"
-                                                     class="max_pic">
+                                                <img src="{{ postuser.uphoto }}" class="max_pic">
                                             </div>
                                         </div>
                                         <div class="i y">
                                             <div>
-                                                <strong>admin</strong>
+                                                <strong>{{ postuser.username }}</strong>
                                                 <em>当前在线</em>
                                             </div>
                                             <dl class="cl">
                                                 <dt>注册时间</dt>
-                                                <dd>2019-06-04 18:34:38</dd>
+                                                <dd>{{ postuser.uregtime }}</dd>
                                                 <dt>积分</dt>
                                                 <dd>191</dd>
                                                 <dt>最后登录</dt>
                                                 <dd>2019-07-24 19:12:40</dd>
                                             </dl>
                                             <div class="imicn">
-                                                <a href="http://py.codingfans.cc/detail.php?id=225#" target="_blank"
-                                                   title="查看详细资料">
-                                                    <img src="{{ url_for('static',filename='images/userinfo.gif') }}"
-                                                         alt="查看详细资料">
+                                                <a href="http://py.codingfans.cc/detail.php?id=225#" target="_blank" title="查看详细资料">
+                                                    <img src="{{ url_for('static',filename='images/userinfo.gif') }}" alt="查看详细资料">
                                                 </a>
                                             </div>
                                             <div id="avatarfeed"><span id="threadsortswait"></span></div>
@@ -128,14 +126,12 @@
                                     </div>
                                     <!--显示用户信息 END-->
                                     <div>
-                                        <div class="avatar" onmouseover="showbpic(';userinfo','225')">
-                                            <img src="{{ url_for('static',filename='images/yh_5d36d64f0c2c8.gif') }}"
-                                                 class="max_pic">
+                                        <div class="avatar" onmouseover="showbpic(';userinfo','{{ postuser.uid }}')">
+                                            <img src="{{ postuser.uphoto }}" class="max_pic">
                                         </div>
-                                        <p><em>管理员</em></p>
-                                        <p><em>博士</em></p>
+                                        <p><em>{{ postuser.usatus }}</em></p>
+                                        <p><em>{{ postuser.ulevel }}</em></p>
                                     </div>
-
                                 </td>
                                 <td class="plc">
                                     <div class="pi">
@@ -213,14 +209,14 @@
                     </div>
                     <!--楼主 END-->
                     <!--回复列表 START-->
-                    {% for reply in replies %}
+                    {% for reply in replylist %}
                         <div id="post_1">
                             <table id="pid226" cellspacing="0" cellpadding="0">
                                 <tbody>
                                 <tr>
                                     <td class="pls" rowspan="2">
                                         <div class="pi">
-                                            <div class="authi">{{ reply.rusername }}</div>
+                                            <div class="authi">{{ reply[1].username }}</div>
                                         </div>
                                         <!--显示用户信息 START-->
                                         <div class="p_pop blk bui" id="userinfo226"
@@ -228,13 +224,12 @@
                                              onmouseout="showdpic('userinfo','226')">
                                             <div class="m z">
                                                 <div id="userinfo226_ma">
-                                                    <img src="{{ url_for('static',filename='images/yh_5d36d64f0c2c8.gif') }}"
-                                                         class="max_pic">
+                                                    <img src="{{ session['uphoto'] }}" class="max_pic">
                                                 </div>
                                             </div>
                                             <div class="i y">
                                                 <div>
-                                                    <strong>admin</strong>
+                                                    <strong>{{ session['username'] }}</strong>
                                                     <em>当前在线</em>
                                                 </div>
                                                 <dl class="cl">
@@ -258,11 +253,10 @@
                                         <div>
                                             <div class="avatar"
                                                  onmouseover="showbpic('userinfo','226')">
-                                                <img src={{ url_for('static',filename='images/yh_5d36d64f0c2c8.gif') }}" class="
-                                                     max_pic">
+                                                <img src="{{ reply[1].uphoto }}" class=" max_pic">
                                             </div>
-                                            <p><em>管理员</em></p>
-                                            <p><em>博士</em></p>
+                                            <p><em>{{ reply[1].ustatus }}</em></p>
+                                            <p><em>{{ reply[1].ulevel }}</em></p>
                                         </div>
                                     </td>
                                     <td class="plc">
@@ -274,7 +268,7 @@
                                                     <img class="authicn vm" id="authicon226"
                                                          src="{{ url_for('static',filename='images/online_admin.gif') }}">
                                                     <em id="authorposton226">发表于<span
-                                                            title="2019-07-18 20:05:24">{{ reply.rdatetime }}</span></em>
+                                                            title="2019-07-18 20:05:24">{{ reply[0].rdatetime }}</span></em>
                                                     <!--<span class="pipe">|</span><a href="#">只看该作者</a>-->
                                                 </div>
                                             </div>
@@ -286,7 +280,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="t_f" id="postmessage_226">
-                                                                <p>{{ reply.rcontent|safe }}</p>
+                                                                <p>{{ reply[0].rcontent|safe }}</p>
                                                             </td>
                                                         </tr>
                                                         </tbody>

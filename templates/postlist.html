@@ -111,15 +111,14 @@
                                                 <td class="by">
                                                     <cite>{{ post.puser }}</cite>
 
-                                                    <em><span
-                                                            class="xi1">{{ moment(post.pposttime).format('YYYY-MM-DD') }}</span></em>
+                                                    <em><span class="xi1">{{ moment(post.pposttime).format('YYYY-MM-DD') }}</span></em>
                                                 </td>
                                                 <td class="num">
                                                     <a href="{{ url_for('bbs.postdetail',pid=post.pid) }}" class="xi2">{{ post.preplycount }}</a>
-                                                    <em>26</em></td>
+                                                    <em>{{ post.phits }}</em></td>
                                                 <td class="by">
                                                     <cite>{{ post.plastreplyuser }}</cite><em>
-                                                    <span title="2019-07-27 14:41:33">{{ moment(post.plastreplytime).fromNow() }}</span></em>
+                                                    <span title='{{ moment(post.plastreplytime).fromNow() }}'>{{ moment(post.plastreplytime).fromNow() }}</span></em>
                                                 </td>
                                             </tr>
                                         {% endfor %}

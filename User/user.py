@@ -55,15 +55,17 @@ def dologin():
         safeanswer = request.form.get('safeanswer')
         user = User.query.filter(User.username == username_input).first()
         if user:
-            if user.upassword == hashlib.sha1(password.encode('utf8')).hexdigest() and user.usafequestion==safequestion:
+            if user.upassword == hashlib.sha1(
+                    password.encode('utf8')).hexdigest() and user.usafequestion == safequestion:
                 user.login()
                 # 验证成功，用户信息存入session
                 session.permanent = True
-                session['username'] = user.username
-                session['uscore'] = user.uscore
-                session['uphoto'] = user.uphoto
-                session['ustatus'] = user.ustatus
-                session['ulevel'] = user.ulevel
+                # session['username'] = user.username
+                # session['uscore'] = user.uscore
+                # session['uphoto'] = user.uphoto
+                # session['ustatus'] = user.ustatus
+                # session['ulevel'] = user.ulevel
+                user.setsession()
                 categories = Category.query.filter(Category.cpid == 0).all()
                 # 登陆成功，转入首页
                 return render_template('tmppage.html', picture=1, v=url_for('bbs.index'), i='登陆成功!', title='登陆成功',
@@ -102,6 +104,7 @@ def user_register():
             email = registerform.email.data
             user = User(username=username, upassword=hashlib.sha1(password.encode('utf8')).hexdigest(), uemail=email)
             user.save_one()
+            user.setsession()
             # 注册成功，转入首页
             return render_template('tmppage.html', picture=1, v=url_for('bbs.index'), i='注册成功!', title='注册成功',
                                    **locals())
@@ -167,6 +170,7 @@ def person_info():
         user.unativeplace = request.form.get('place')
         user.uqqnum = request.form.get('qq')
         user.save_one()
+        user.setsession()
         return render_template('tmppage.html', picture=1, v=url_for('user.person_info'), i='修改个人信息成功!', **locals())
     else:
         return render_template('home_person.html', title='个人信息', **locals())
@@ -198,7 +202,7 @@ def person_protrait():
             filename = photos.save(photo)
             img_url = photos.url(filename)
             user.uphoto = '/static/upload/' + filename
-            session['uphoto']=user.uphoto
+            session['uphoto'] = user.uphoto
             user.save_one()
             return render_template('tmppage.html', picture=1, v=url_for('user.person_protrait'), i='修改头像成功!',
                                    **locals())

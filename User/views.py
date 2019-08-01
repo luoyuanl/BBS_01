@@ -15,7 +15,7 @@ def index(cid=0):
     else:
         bigcategory = Category.query.filter(Category.cid == cid).all()
     smallcategory = Category.query.filter(Category.cpid != 0).all()
-    bigc = Category.query.filter(Category.cid==cid).first()
+    bigc = Category.query.filter(Category.cid == cid).first()
     posts = Posts.query.filter(Category.cid == cid).all()
     postscount = db.session.query(Posts).count()
     userscount = db.session.query(User).count()
@@ -40,7 +40,8 @@ def posts(cid=0):
     return render_template('postlist.html', title='post', **locals())
 
 
-# 帖子详细信息
+# 帖子详细信息、回帖
+@bbs.route('/detail/<int:pid>')
 @bbs.route('/detail/<int:pid>', methods=['GET', 'POST'])
 def postdetail(pid=1):
     categories = Category.query.filter(Category.cpid == 0).all()
@@ -50,25 +51,34 @@ def postdetail(pid=1):
     bigc = Category.query.filter(Category.cid == smallc.cpid).first()
     post = Posts.query.filter(Posts.pid == pid).first()
     replies = Replies.query.filter(Replies.rpid == pid).all()
+    replylist = []
+    for reply in replies:
+        replyuser = User.query.filter(User.username == reply.rusername).first()
+        replylist.append([reply, replyuser])
     postuser = User.query.filter(User.username == post.puser).first()
     lastreplyuser = User.query.filter(User.username == post.plastreplyuser).first()
     if request.method == 'POST':
         if session.get('username'):
             user = User.query.filter(User.username == session['username']).first()
             myreply = request.form.get('myreply')
-            newreply = Replies(rcontent=myreply, rusername=user.username,rpid=post.pid)
+            newreply = Replies(rcontent=myreply, rusername=user.username, rpid=post.pid)
             # 生成回复记录
             newreply.save_one()
             # 更新帖子信息
-            post.replypost(user.username,newreply.rdatetime)
+            post.replypost(user.username)
             # 更新user信息
             user.replypost()
+            user.setsession()
             # 更新板块信息
             smallc.replypost(user.username)
             pid = newreply.rpid
-            return render_template('tmppage.html', picture=1, v=url_for('bbs.postdetail',pid=post.pid), i='回复成功！获得10金币和2积分', **locals())
+            return render_template('tmppage.html', picture=1, v=url_for('bbs.postdetail', pid=post.pid),
+                                   i='回复成功！获得10金币和2积分', **locals())
         return render_template('login.html', **locals())
-    return render_template('postdetail.html',**locals())
+    else:
+        post.phits += 1
+        post.save_one()
+        return render_template('postdetail.html', **locals())
 
 
 # 发帖子
@@ -91,9 +101,11 @@ def editpost(cid=0):
             pid = newpost.pid
             # 更新user信息
             user.editpost()
+            user.setsession()
             # 更新板块信息
             smallc.editpost(user.username)
-            return render_template('tmppage.html', picture=1, v=url_for('bbs.postdetail',pid=pid), i='发帖成功！获得50金币和5积分', **locals())
+            return render_template('tmppage.html', picture=1, v=url_for('bbs.postdetail', pid=pid), i='发帖成功！获得50金币和5积分',
+                                   **locals())
         return render_template('editpost.html', **locals())
     return render_template('login.html', **locals())
 
@@ -102,4 +114,4 @@ def editpost(cid=0):
 @bbs.route('/moment/')
 def custom_time():
     current = datetime.utcnow()
-    return render_template('common/Base.html', current_time=current)
+    return render_template('common/Base.html', time=current)
