@@ -9,12 +9,6 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/view.css') }}">
     {% endblock %}
     {% block script %}
-        {#        <script type="text/javascript" src="{{ url_for('static',filename='js/config.js.下载') }}"></script>#}
-        {#        <script type="text/javascript" src="{{ url_for('static',filename='js/zh-cn.js.下载') }}"></script>#}
-        {#        <script type="text/javascript" src="{{ url_for('static',filename='js/plugin.js.下载') }}"></script>#}
-        {#        <script type="text/javascript" src="{{ url_for('static',filename='js/zh-cn.js(1).下载') }}"></script>#}
-        {#        <script type="text/javascript" src="{{ url_for('static',filename='js/yui.js.下载') }}"></script>#}
-        {#        <script type="text/javascript" src="{{ url_for('static',filename='js/default.js.下载') }}"></script>#}
         <script type="text/javascript" charset="utf-8"
                 src="{{ url_for('static', filename='ueditor/ueditor.config.js') }}"></script>
         <script type="text/javascript" charset="utf-8"
@@ -92,8 +86,8 @@
                         <tr>
                             <td class="pls ptm pbm">
                                 <div class="hm">
-                                    <span class="xg1">查看:</span> <span class="xi1">128</span><span class="pipe">|</span>
-                                    <span class="xg1">回复:</span> <span class="xi1">8</span>
+                                    <span class="xg1">查看:</span> <span class="xi1">{{ post.phits }}</span><span class="pipe">|</span>
+                                    <span class="xg1">回复:</span> <span class="xi1">{{ post.preplycount }}</span>
                                 </div>
                             </td>
                             <td class="plc ptm pbn">
@@ -180,13 +174,13 @@
                                         <div id="fj" class="y">
                                             <label class="z">电梯直达</label>
                                             <input id="louceng" type="text" class="px p_fre z" size="2" title="跳转到指定楼层">
-                                            <a href="javascript:;" id="fj_btn" class="z" title="跳转到指定楼层">
+                                            <a href="#" id="fj_btn" class="z" title="跳转到指定楼层">
                                                 <img src="{{ url_for('static',filename='images/fj_btn.png') }}"
-                                                     onclick="golouceng()" alt="跳转到指定楼层" class="vm">
+                                                     onclick="" alt="跳转到指定楼层" class="vm">
                                             </a>
                                             <script>
                                                 function golouceng() {
-                                                    location.href = 'detail.php?id=225#post_' + document.getElementById('louceng').value;
+                                                    location.href = 'detail.php?id=225#' + document.getElementById('louceng').value;
                                                 }
                                             </script>
                                         </div>
@@ -275,7 +269,7 @@
                                             </div>
                                             <div class="i y">
                                                 <div>
-                                                    <strong>{{ session['username'] }}</strong>
+                                                    <strong>{{ reply[1].username }}</strong>
                                                     <em>当前在线</em>
                                                 </div>
                                                 <dl class="cl">
@@ -297,8 +291,7 @@
                                         </div>
                                         <!--显示用户信息 END-->
                                         <div>
-                                            <div class="avatar"
-                                                 onmouseover="showbpic('userinfo','226')">
+                                            <div class="avatar" onmouseover="showbpic('userinfo','226')">
                                                 <img src="{{ reply[1].photo }}" class=" max_pic">
                                             </div>
                                             <p><em>{{ reply[1].status }}</em></p>
@@ -320,6 +313,15 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    {% if reply[0].isshielded ==1 %}
+                                        <div class="pct">
+                                            <div class="pcb">
+                                                <div class="locked">提示: <em>该帖被管理员或版主屏蔽</em></div>
+                                                <div id="comment_20" class="cm"></div>
+                                                <div id="post_rate_div_20"></div>
+                                            </div>
+                                        </div>
+                                    {% else %}
                                         <div class="pct">
                                             <div class="pcb">
                                                 <div class="t_fsz">
@@ -337,6 +339,7 @@
                                                 <div id="post_rate_div_226"></div>
                                             </div>
                                         </div>
+                                    {% endif %}
                                         <div class="sign" style="max-height:100px;maxHeightIE:100px;">
                                             <p><span
                                                     style="background-color:#ffff00;">{{ reply[1].signature|safe }}</span>

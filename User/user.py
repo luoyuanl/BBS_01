@@ -1,6 +1,6 @@
 import hashlib
 
-from flask import Blueprint, render_template, request, session, make_response, url_for
+from flask import Blueprint, render_template, request, session, make_response, url_for,redirect
 
 from User.models import User, Category
 from User.forms import RegisterForm
@@ -11,25 +11,17 @@ from ext import photos
 user = Blueprint('user', __name__, url_prefix='/user')
 
 
-# 登录
+# 右上角登录
 @user.route('/login/', methods=['GET', 'POST'])
 def user_login():
     categories = Category.query.filter(Category.cpid == 0).all()
     if request.method == 'POST':
-        session['sourcepage'] = request.environ.get('HTTP_REFERER', '/')
         username_input = request.form.get('username')
         password = request.form.get('password')
         # 验证用户名和密码是否正确
         user = User.query.filter(User.username == username_input).first()
         if user:
             if user.password == hashlib.sha1(password.encode('utf8')).hexdigest():
-                # 验证成功，用户信息存入session
-                # session.permanent = True
-                # session['username'] = user.username
-                # session['score'] = user.score
-                # session['photo'] = user.photo
-                # session['type'] = user.type
-                # session['level'] = user.level
                 user.setsession()
                 categories = Category.query.filter(Category.cpid == 0).all()
                 # 登陆成功，转入首页
@@ -91,23 +83,23 @@ def user_register():
     categories = Category.query.filter(Category.cpid == 0).all()
     code = session.get('code')
     if request.method == 'POST':
-        yzm = request.form.get('yzm')
-        # code = session.get('code')
-        if registerform.validate_on_submit() and yzm == code:
-            # 验证成功
-            session.pop('code')
-            username = registerform.username.data
-            password = registerform.passsword.data
-            email = registerform.email.data
-            user = User(username=username, password=hashlib.sha1(password.encode('utf8')).hexdigest(), email=email)
-            user.save_one()
-            user.setsession()
-            # 注册成功，转入首页
-            return render_template('tmppage.html', picture=1, v=url_for('bbs.index'), i='注册成功!获得50金币', title='注册成功',
-                                   **locals())
-        return render_template('tmppage.html', picture=0, v=url_for('user.user_register'), i='账号或密码有误，请重新输入',
-                               title='注册失败',
-                               **locals())
+        if registerform.validate_on_submit():
+            yzm = request.form.get('yzm')
+            if yzm == code:
+                # 验证成功
+                username = registerform.username.data
+                password = registerform.passsword.data
+                email = registerform.email.data
+                user = User(username=username, password=hashlib.sha1(password.encode('utf8')).hexdigest(), email=email)
+                user.save_one()
+                user.setsession()
+                session.pop('code')
+                # 注册成功，转入首页
+                return render_template('tmppage.html', picture=1, v=url_for('bbs.index'), i='注册成功!获得50金币', title='注册成功',
+                                       **locals())
+            else:
+                return render_template('tmppage.html', picture=0, v=url_for('user.user_register'), i='验证码输入错误，请重新输入！', title='注册失败',
+                                       **locals())
     return render_template('register.html', title='注册', form=registerform, **locals())
 
 

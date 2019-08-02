@@ -9,6 +9,7 @@ bbs = Blueprint('bbs', __name__, url_prefix='')
 @bbs.route('/index/')
 @bbs.route('/index/<int:cid>')
 def index(cid=0):
+    session['logcount']=0
     categories, smallcategory, bigc, smallc = Category.show_category(cid)
     posts = Posts.query.filter(Category.cid == cid).all()
     postscount = db.session.query(Posts).count()
