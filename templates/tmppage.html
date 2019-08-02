@@ -1,0 +1,49 @@
+{% extends 'common/Base.html' %}
+{% block head %}
+    {{ super() }}
+    <title>{{ title }}</title>
+{% endblock head %}
+{% block body %}
+    {% block navbar %}
+        {{ super() }}
+    {% endblock navbar %}
+    {% block content %}
+        <script type="text/javascript">
+            window.onload = function () {
+                var time = 1;
+                var secondEle = document.getElementById("second");
+                var timer = setInterval(function () {
+                    secondEle.innerHTML = time;
+                    time--;
+                    if (time == 0) {
+                        clearInterval(timer);
+                        location.href = "{{ v }}";
+                    }
+                }, 1000);
+            }
+        </script>
+{#        参数：{v:跳转路由，picture:正确或错误，acolor:字体颜色，i:显示信息}#}
+        <div style="height: 300px; text-align: center;">
+            <div style="height: 150px; width: 40%; text-align: left; margin: 50px auto; font-size: 15px">
+                {% if picture==1 %}
+                    <img src="{{ url_for('static',filename='images/right.gif') }}">
+                    <p style="color: green;font-weight: bold">{{ i }}</p>
+                {% elif picture==0 %}
+                    <img src="{{ url_for('static',filename='images/error.gif') }}">
+                    <p style="color: red;font-weight: bold">{{ i }}</p>
+                {% else %}
+                    <img src="{{ url_for('static',filename='images/right.gif') }}">
+                    <p style="color: gold;font-weight: bold">{{ i }}</p>
+                {% endif %}
+                请稍等.......
+                <a href="{{ v }}" style="color: #1A588D">
+                    <h2>如果你的浏览器没有自动跳转，请点击此链接...<span style="color:red; font-weight: bold;font-size: 15px;" id="second">3</span></h2>
+                </a>
+            </div>
+        </div>
+    {% endblock content %}
+    {% block footer %}
+        {{ super() }}
+    {% endblock footer %}
+{% endblock body %}
+</html>
