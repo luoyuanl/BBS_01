@@ -21,7 +21,7 @@
                 src="{{ url_for('static', filename='ueditor/ueditor.all.min.js') }}"></script>
         <script type="text/javascript" charset="utf-8"
                 src="{{ url_for('static', filename='ueditor/lang/zh-cn/zh-cn.js') }}"></script>
-    {% endblock %}
+    {% endblock script %}
 {% endblock head %}
 {% block body %}
     {% block navbar %}
@@ -53,6 +53,38 @@
                         <img src="{{ url_for('static',filename='images/pn_reply.png') }}" alt="回复">
                     </a>
                 </div>
+                {% if session['type'] == '管理员' %}
+                    <div id="modmenu" class="xi2 pbm">
+                        {% if post.pisdel==0 %}
+                            <a href="{{ url_for ('bbs.post_del',delete=1,pid=post.pid) }}">删除主题</a>
+                            <span class="pipe">|</span>
+                        {% else %}
+                            <a href="{{ url_for ('bbs.post_del',delete=0,pid=post.pid) }}">恢复主题</a>
+                            <span class="pipe">|</span>
+                        {% endif %}
+                        {% if post.pistop==0 %}
+                            <a href="{{ url_for ('bbs.post_top',top=1,pid=post.pid) }}">置顶</a>
+                            <span class="pipe">|</span>
+                        {% else %}
+                            <a href="{{ url_for ('bbs.post_top',top=0,pid=post.pid) }}">取消置顶</a>
+                            <span class="pipe">|</span>
+                        {% endif %}
+                        {% if post.pislight==0 %}
+                            <a href="{{ url_for ('bbs.post_light',light=1,pid=post.pid) }}">高亮</a>
+                            <span class="pipe">|</span>
+                        {% else %}
+                            <a href="{{ url_for ('bbs.post_light',light=0,pid=post.pid) }}">取消高亮</a>
+                            <span class="pipe">|</span>
+                        {% endif %}
+                        {% if post.piselite==0 %}
+                            <a href="{{ url_for ('bbs.post_elite',elite=1,pid=post.pid) }}">精华</a>
+                            <span class="pipe">|</span>
+                        {% else %}
+                            <a href="{{ url_for ('bbs.post_elite',elite=0,pid=post.pid) }}">取消精华</a>
+                            <span class="pipe">|</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
                 <div id="postlist" class="pl bm">
                     <!--楼主 START-->
                     <table cellspacing="0" cellpadding="0">
@@ -66,16 +98,24 @@
                             </td>
                             <td class="plc ptm pbn">
                                 <div class="y">
-                                    <a href="http://py.codingfans.cc/detail.php?id=250" title="上一主题">
+                                    <a href="" title="上一主题">
+                                        {#                                        <a href="{{ url_for('bbs.postdetail',pid=lastpid)}}" title="上一主题">#}
                                         <img src="{{ url_for('static',filename='images/thread-prev.png') }}" alt="上一主题"
                                              class="vm">
                                     </a>
-                                    <a href="http://py.codingfans.cc/detail.php?id=205" title="下一主题">
+                                    <a href="" title="下一主题">
+                                        {#                                        <a href="{{ url_for('bbs.postdetail',pid=nextpid) }}" title="下一主题">#}
                                         <img src="{{ url_for('static',filename='images/thread-next.png') }}" alt="下一主题"
                                              class="vm">
                                     </a>
                                 </div>
-                                <h1 class="ts">{{ post.ptitle }}</h1>
+                                <h1 class="ts" {% if post.pislight==1 %} style="color:red" {% else %}
+                                    style="color: black" {% endif %}>{{ post.ptitle }}
+                                    {% if post.piselite==1 %}
+                                        <img src="{{ url_for( 'static',filename='images/digest_1.gif') }}"
+                                             align="absmiddle" alt="digest" title="精华帖">
+                                    {% endif %}
+                                </h1>
                             </td>
                         </tr>
                         </tbody>
@@ -100,7 +140,7 @@
                                          onmouseout="showdpic('userinfo','{{ postuser.uid }}')">
                                         <div class="m z">
                                             <div id="userinfo225_ma">
-                                                <img src="{{ postuser.uphoto }}" class="max_pic">
+                                                <img src="{{ postuser.photo }}" class="max_pic">
                                             </div>
                                         </div>
                                         <div class="i y">
@@ -110,15 +150,17 @@
                                             </div>
                                             <dl class="cl">
                                                 <dt>注册时间</dt>
-                                                <dd>{{ postuser.uregtime }}</dd>
+                                                <dd>{{ postuser.regtime }}</dd>
                                                 <dt>积分</dt>
-                                                <dd>191</dd>
+                                                <dd>{{ postuser.score }}</dd>
                                                 <dt>最后登录</dt>
-                                                <dd>2019-07-24 19:12:40</dd>
+                                                <dd>{{ postuser.lastlogintime }}</dd>
                                             </dl>
                                             <div class="imicn">
-                                                <a href="http://py.codingfans.cc/detail.php?id=225#" target="_blank" title="查看详细资料">
-                                                    <img src="{{ url_for('static',filename='images/userinfo.gif') }}" alt="查看详细资料">
+                                                <a href="http://py.codingfans.cc/detail.php?id=225#" target="_blank"
+                                                   title="查看详细资料">
+                                                    <img src="{{ url_for('static',filename='images/userinfo.gif') }}"
+                                                         alt="查看详细资料">
                                                 </a>
                                             </div>
                                             <div id="avatarfeed"><span id="threadsortswait"></span></div>
@@ -127,10 +169,10 @@
                                     <!--显示用户信息 END-->
                                     <div>
                                         <div class="avatar" onmouseover="showbpic(';userinfo','{{ postuser.uid }}')">
-                                            <img src="{{ postuser.uphoto }}" class="max_pic">
+                                            <img src="{{ postuser.photo }}" class="max_pic">
                                         </div>
-                                        <p><em>{{ postuser.usatus }}</em></p>
-                                        <p><em>{{ postuser.ulevel }}</em></p>
+                                        <p><em>{{ postuser.satus }}</em></p>
+                                        <p><em>{{ postuser.level }}</em></p>
                                     </div>
                                 </td>
                                 <td class="plc">
@@ -138,10 +180,10 @@
                                         <div id="fj" class="y">
                                             <label class="z">电梯直达</label>
                                             <input id="louceng" type="text" class="px p_fre z" size="2" title="跳转到指定楼层">
-                                            <a href="javascript:;" id="fj_btn" class="z" title="跳转到指定楼层"><img
-                                                    src="{{ url_for('static',filename='images/fj_btn.png') }}"
-                                                    onclick="golouceng()"
-                                                    alt="跳转到指定楼层" class="vm"></a>
+                                            <a href="javascript:;" id="fj_btn" class="z" title="跳转到指定楼层">
+                                                <img src="{{ url_for('static',filename='images/fj_btn.png') }}"
+                                                     onclick="golouceng()" alt="跳转到指定楼层" class="vm">
+                                            </a>
                                             <script>
                                                 function golouceng() {
                                                     location.href = 'detail.php?id=225#post_' + document.getElementById('louceng').value;
@@ -149,7 +191,7 @@
                                             </script>
                                         </div>
                                         <strong>
-                                            <a href="http://py.codingfans.cc/detail.php?id=225" id="postnum4">楼主</a>
+                                            <a href="" id="postnum4">楼主</a>
                                         </strong>
                                         <div class="pti">
                                             <div class="pdbt">
@@ -157,7 +199,7 @@
                                             <div class="authi">
                                                 <img class="authicn vm" id="authicon225"
                                                      src="{{ url_for('static',filename='images/online_admin.gif') }}">
-                                                <em id="authorposton225">发表于 2019-07-15 09:03:46</em>
+                                                <em id="authorposton225">发表于{{ post.pposttime }}</em>
                                                 <!--<span class="pipe">|</span><a href="#">只看该作者</a>-->
                                             </div>
                                         </div>
@@ -171,7 +213,8 @@
                                                 <table cellspacing="0" cellpadding="0">
                                                     <tbody>
                                                     <tr>
-                                                        <td class="t_f" id="postmessage_225">{{ post.pcontent|safe }}</td>
+                                                        <td class="t_f"
+                                                            id="postmessage_225">{{ post.pcontent|safe }}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -184,9 +227,12 @@
                             </tr>
                             <tr>
                                 <td class="plc plm">
-                                    <div class="modact">本主题已加入精华</div>
+                                    {% if post.piselite==1 %}
+                                        <div class="modact">本主题已加入精华</div>
+                                    {% endif %}
                                     <div class="sign" style="max-height:100px;maxHeightIE:100px;">
-                                        <p><span style="background-color:#ffff00;">{{ postuser.usignature }}</span></p>
+                                        <p><span style="background-color:#ffff00;">{{ postuser.signature|safe }}</span>
+                                        </p>
                                     </div>
                                 </td>
                             </tr>
@@ -224,7 +270,7 @@
                                              onmouseout="showdpic('userinfo','226')">
                                             <div class="m z">
                                                 <div id="userinfo226_ma">
-                                                    <img src="{{ session['uphoto'] }}" class="max_pic">
+                                                    <img src="{{ reply[1].photo }}" class="max_pic">
                                                 </div>
                                             </div>
                                             <div class="i y">
@@ -234,11 +280,11 @@
                                                 </div>
                                                 <dl class="cl">
                                                     <dt>注册时间</dt>
-                                                    <dd>2019-06-04</dd>
+                                                    <dd>{{ reply[1].regtime }}</dd>
                                                     <dt>积分</dt>
-                                                    <dd>191</dd>
+                                                    <dd>{{ reply[1].score }}</dd>
                                                     <dt>最后登录</dt>
-                                                    <dd>2019-07-24</dd>
+                                                    <dd>{{ reply[1].lastlogintime }}</dd>
                                                 </dl>
                                                 <div class="imicn">
                                                     <a href="http://py.codingfans.cc/detail.php?id=225#" target="_blank"
@@ -253,22 +299,23 @@
                                         <div>
                                             <div class="avatar"
                                                  onmouseover="showbpic('userinfo','226')">
-                                                <img src="{{ reply[1].uphoto }}" class=" max_pic">
+                                                <img src="{{ reply[1].photo }}" class=" max_pic">
                                             </div>
-                                            <p><em>{{ reply[1].ustatus }}</em></p>
-                                            <p><em>{{ reply[1].ulevel }}</em></p>
+                                            <p><em>{{ reply[1].status }}</em></p>
+                                            <p><em>{{ reply[1].level }}</em></p>
                                         </div>
                                     </td>
                                     <td class="plc">
                                         <div class="pi">
-                                            <strong><a>沙发</a></strong>
+                                            <strong><a>{% if reply[2]==1 %}{{ '沙发' }} {% elif reply[2]==2 %}
+                                                {{ '板凳' }}{% endif %}{{ reply[2] }}楼</a></strong>
                                             <div class="pti">
                                                 <div class="pdbt"></div>
                                                 <div class="authi">
                                                     <img class="authicn vm" id="authicon226"
                                                          src="{{ url_for('static',filename='images/online_admin.gif') }}">
                                                     <em id="authorposton226">发表于<span
-                                                            title="2019-07-18 20:05:24">{{ reply[0].rdatetime }}</span></em>
+                                                            title="reply[0].replytime">{{ reply[0].replytime }}</span></em>
                                                     <!--<span class="pipe">|</span><a href="#">只看该作者</a>-->
                                                 </div>
                                             </div>
@@ -292,7 +339,7 @@
                                         </div>
                                         <div class="sign" style="max-height:100px;maxHeightIE:100px;">
                                             <p><span
-                                                    style="background-color:#ffff00;">{{ lastreplyuser.usignature }}</span>
+                                                    style="background-color:#ffff00;">{{ reply[1].signature|safe }}</span>
                                             </p>
                                         </div>
                                     </td>
@@ -342,13 +389,14 @@
                 </div>
                 <!--回帖 START-->
                 <div id="f_pst" class="pl bm bmw">
-                    <form method="post" autocomplete="off" id="fastpostform" action="{{ url_for('bbs.postdetail',pid=pid) }}">
+                    <form method="post" autocomplete="off" id="fastpostform"
+                          action="{{ url_for('bbs.postdetail',pid=pid) }}">
                         <table cellspacing="0" cellpadding="0">
                             <tbody>
                             <tr>
                                 <td class="pls">
                                     <div class="avatar">
-                                        <img src="{{ url_for('static',filename='images/yh_5d36d94c6068c.jpg') }}"
+                                        <img src="{{ session['photo'] }}"
                                              class="max_pic">
                                     </div>
                                 </td>
@@ -398,86 +446,67 @@
 
             }
         </script>
+        <style>
+            .paylist {
+                z-index: 20;
+                left: 50%; /*ff ie7*/
+                top: 50%; /*ff ie7*/
+                background: #FFFFFF;
+                margin-left: -100px !important; /*ff ie7 该值为本身宽的一半 */
+                margin-top: -60px !important; /*ff ie7 该值为本身高的一半*/
+                margin-top: 0px;
+                position: fixed !important; /*ff ie7*/
+                position: absolute; /*ie6*/
+                _top: expression(eval(document.compatmode && document.compatmode=='css1compat') ?
+					documentelement.scrolltop + (document.documentelement.clientheight-this.offsetheight)/2 :/*ie6*/
+					document.body.scrolltop + (document.body.clientheight - this.clientheight)/2); /*ie5 ie5.5*/
+            }
+        </style>
+        <div class="paylist" style="width:410px; overflow:hidden; border:5px solid #ccc; display:none;">
+            <form id="payform" method="post" autocomplete="off" action="http://py.codingfans.cc/detail.php?id=225">
+                <div class="f_c">
+                    <h3 class="flb">
+                        <em id="return_">购买主题</em>
+                        <span>
+				<a href="http://py.codingfans.cc/detail.php?id=225" class="flbc" title="关闭">关闭</a>
+			</span>
+                    </h3>
+                    <div class="c">
+                        <table class="list" cellspacing="0" cellpadding="0" style="width:400px">
+                            <tbody>
+                            <tr>
+                                <td width="20"></td>
+                                <td><b>帖子</b></td>
+                                <td width="80"><b>作者</b></td>
+                                <td width="100"><b>售价(积分)</b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>总计：</b>
+                                </td>
+                                <td><b></b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="o pns">
+                                        <button type="submit" name="paysubmit" class="pn pnc" value="true">
+                                            <span>购买</span>
+                                        </button>
+                                        <button type="submit" name="delsubmit" class="pn pnc" value="true">
+                                            <span>删除</span>
+                                        </button>
+                                    </div>
 
-        <!--FOOT start-->
-        <div id="ft" class="wp cl">
-            <div id="flk" class="y">
-                <p>
-                    <a href="http://py.codingfans.cc/detail.php?id=225#">京ICP备 89273号</a><span
-                        class="pipe">|</span><strong><a
-                        href="http://www.phpxy.com/" target="_blank">phpxy</a></strong>
-                </p>
-                <p class="xs0">
-                    Time Now Is: 07-24 19:14 </p>
-            </div>
-            <div id="frt">
-                <p>Powered by <strong><a href="http://www.phpxy.com/" target="_blank">phpxy</a></strong> <em>V2</em></p>
-                <p class="xs0">© 2019 <a href="http://www.phpxy.com/" target="_blank">phpxy Inc.</a></p>
-            </div>
-        </div><!--FOOT end-->
-
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
     {% endblock content %}
     {% block footer %}
         {{ super() }}
     {% endblock footer %}
-    <style>
-        .paylist {
-            z-index: 20;
-            left: 50%; /*ff ie7*/
-            top: 50%; /*ff ie7*/
-            background: #FFFFFF;
-            margin-left: -100px !important; /*ff ie7 该值为本身宽的一半 */
-            margin-top: -60px !important; /*ff ie7 该值为本身高的一半*/
-            margin-top: 0px;
-            position: fixed !important; /*ff ie7*/
-            position: absolute; /*ie6*/
-            _top: expression(eval(document.compatmode && document.compatmode=='css1compat') ?
-					documentelement.scrolltop + (document.documentelement.clientheight-this.offsetheight)/2 :/*ie6*/
-					document.body.scrolltop + (document.body.clientheight - this.clientheight)/2); /*ie5 ie5.5*/
-        }
-    </style>
-    <div class="paylist" style="width:410px; overflow:hidden; border:5px solid #ccc; display:none;">
-        <form id="payform" method="post" autocomplete="off" action="http://py.codingfans.cc/detail.php?id=225">
-            <div class="f_c">
-                <h3 class="flb">
-                    <em id="return_">购买主题</em>
-                    <span>
-				<a href="http://py.codingfans.cc/detail.php?id=225" class="flbc" title="关闭">关闭</a>
-			</span>
-                </h3>
-                <div class="c">
-                    <table class="list" cellspacing="0" cellpadding="0" style="width:400px">
-                        <tbody>
-                        <tr>
-                            <td width="20"></td>
-                            <td><b>帖子</b></td>
-                            <td width="80"><b>作者</b></td>
-                            <td width="100"><b>售价(积分)</b></td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>总计：</b>
-                            </td>
-                            <td><b></b></td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <div class="o pns">
-                                    <button type="submit" name="paysubmit" class="pn pnc" value="true">
-                                        <span>购买</span>
-                                    </button>
-                                    <button type="submit" name="delsubmit" class="pn pnc" value="true">
-                                        <span>删除</span>
-                                    </button>
-                                </div>
-
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </form>
-    </div>
-
 {% endblock body %}
 </html>

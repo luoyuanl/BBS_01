@@ -31,7 +31,7 @@
                     <div class="mn">
                         <div class="fl bm">
                             <!--板块 start-->
-                            {% for b in bigcategory %}
+                            {% for b in categories %}
                                 <div class="bm bmw  cl">
                                     <div class="bm_h cl">
                                         <h2><a href="{{ url_for('bbs.index',cid=b.cid) }}">{{ b.categoryname }}</a></h2>
@@ -49,15 +49,15 @@
                                                         <td>
                                                             <h2><a href="{{ url_for('bbs.posts',cid=s.cid) }}" style="color:">{{ s.categoryname }}</a></h2>
                                                             <p class="xg2"></p>
-                                                            <p>版主: <span class="xi2">{{ s.ccompere }}</span></p>
+                                                            <p>版主: <span class="xi2">{{ s.compere }}</span></p>
                                                         </td>
                                                         <td class="fl_i">
-                                                            <span class="xi2">{{ s.cthemecount }}</span><span class="xg1"> / {{ s.creplycount }}</span>
+                                                            <span class="xi2">{{ s.cthemecount }}</span>/<span class="xg1">{{ s.creplycount }}</span>
                                                         </td>
                                                         <td class="fl_by">
                                                             <div>
-                                                                <a href="" class="xi2">{{ s.lastpostname }}</a>
-                                                                <cite><span title="2019-07-23">{{ s.lastreplytime }}</span>&nbsp;{{ s.lastreplyuser }}</cite>
+                                                                <a href="" class="xi2">{{ s.clastpostname }}</a>
+                                                                <cite><span title="2019-07-23">{{ moment(s.clastreplytime,local=True).fromNow() }}</span>&nbsp;{{ s.clastreplyuser }}</cite>
                                                             </div>
                                                         </td>
                                                     </tr>

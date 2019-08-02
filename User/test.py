@@ -1,6 +1,6 @@
 from flask import current_app
 from flask_mail import Message
-
+import hashlib
 from User.views import *
 
 # 创建表
@@ -23,17 +23,17 @@ def delete_tables():
 # 增加一条记录
 @bbs.route('/add1/')
 def add_user():
-    # user = User()
-    # user.username = 'admin'
-    # # user.upassword_hash = hashlib.sha1(b'123').hexdigest()
+    user = User()
+    user.username = 'admin'
+    user.upassword_hash = hashlib.sha1(b'123').hexdigest()
     # user.upassword_hash = '123'
-    # user.save_one()
-    # return 'add_user'
-    category = Category()
-    category.categoryname = 'python'
-    category.cpid = 2
-    category.save_one()
-    return 'add_category'
+    user.save_one()
+    return 'add_user'
+    # category = Category()
+    # category.categoryname = 'python'
+    # category.cpid = 2
+    # category.save_one()
+    # return 'add_category'
 
 
 # 删除一条记录

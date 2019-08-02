@@ -3,6 +3,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_uploads import configure_uploads, patch_request_class
 
+from User.admin import admin
 from User.user import user
 from User.views import bbs
 from ext import db, moment, photos
@@ -15,6 +16,7 @@ manager = Manager(app)
 # 注册蓝图
 app.register_blueprint(bbs)
 app.register_blueprint(user)
+app.register_blueprint(admin)
 
 # 初始化对象
 db.init_app(app)

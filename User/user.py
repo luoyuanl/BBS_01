@@ -22,14 +22,15 @@ def user_login():
         # 验证用户名和密码是否正确
         user = User.query.filter(User.username == username_input).first()
         if user:
-            if user.upassword == hashlib.sha1(password.encode('utf8')).hexdigest():
+            if user.password == hashlib.sha1(password.encode('utf8')).hexdigest():
                 # 验证成功，用户信息存入session
-                session.permanent = True
-                session['username'] = user.username
-                session['uscore'] = user.uscore
-                session['uphoto'] = user.uphoto
-                session['ustatus'] = user.ustatus
-                session['ulevel'] = user.ulevel
+                # session.permanent = True
+                # session['username'] = user.username
+                # session['score'] = user.score
+                # session['photo'] = user.photo
+                # session['type'] = user.type
+                # session['level'] = user.level
+                user.setsession()
                 categories = Category.query.filter(Category.cpid == 0).all()
                 # 登陆成功，转入首页
                 return render_template('tmppage.html', picture=1, v=url_for('bbs.index'), i='登陆成功!', title='登陆成功',
@@ -46,25 +47,20 @@ def user_login():
 @user.route('/dologin/', methods=['GET', 'POST'])
 def dologin():
     categories = Category.query.filter(Category.cpid == 0).all()
-    print(request)
+    code = session.get('code')
     if request.method == 'POST':
-        print(session.get('sourcepage'))
+        yzm = request.form.get('yzm')
         username_input = request.form.get('username')
         password = request.form.get('password')
         safequestion = request.form.get('safequestion')
         safeanswer = request.form.get('safeanswer')
         user = User.query.filter(User.username == username_input).first()
         if user:
-            if user.upassword == hashlib.sha1(
-                    password.encode('utf8')).hexdigest() and user.usafequestion == safequestion:
+            if user.password == hashlib.sha1(
+                    password.encode(
+                        'utf8')).hexdigest() and user.safequestion == safequestion and user.safeanswer == safeanswer and yzm == code:
                 user.login()
                 # 验证成功，用户信息存入session
-                session.permanent = True
-                # session['username'] = user.username
-                # session['uscore'] = user.uscore
-                # session['uphoto'] = user.uphoto
-                # session['ustatus'] = user.ustatus
-                # session['ulevel'] = user.ulevel
                 user.setsession()
                 categories = Category.query.filter(Category.cpid == 0).all()
                 # 登陆成功，转入首页
@@ -93,20 +89,21 @@ def user_register():
     # 生成验证表单对象
     registerform = RegisterForm()
     categories = Category.query.filter(Category.cpid == 0).all()
+    code = session.get('code')
     if request.method == 'POST':
         yzm = request.form.get('yzm')
-        code = session.get('code')
+        # code = session.get('code')
         if registerform.validate_on_submit() and yzm == code:
             # 验证成功
             session.pop('code')
             username = registerform.username.data
             password = registerform.passsword.data
             email = registerform.email.data
-            user = User(username=username, upassword=hashlib.sha1(password.encode('utf8')).hexdigest(), uemail=email)
+            user = User(username=username, password=hashlib.sha1(password.encode('utf8')).hexdigest(), email=email)
             user.save_one()
             user.setsession()
             # 注册成功，转入首页
-            return render_template('tmppage.html', picture=1, v=url_for('bbs.index'), i='注册成功!', title='注册成功',
+            return render_template('tmppage.html', picture=1, v=url_for('bbs.index'), i='注册成功!获得50金币', title='注册成功',
                                    **locals())
         return render_template('tmppage.html', picture=0, v=url_for('user.user_register'), i='账号或密码有误，请重新输入',
                                title='注册失败',
@@ -134,18 +131,17 @@ def person_psdsafe():
     if request.method == 'POST':
         user = User.query.filter(User.username == username).first()
         oldpassword = request.form.get('oldpassword')
-        if user.upassword == hashlib.sha1(oldpassword.encode('utf8')).hexdigest():
+        if user.password == hashlib.sha1(oldpassword.encode('utf8')).hexdigest():
             password = request.form.get('newpassword')
             password2 = request.form.get('newpassword2')
             if password == password2:
-                user.upassword = hashlib.sha1(password.encode('utf8')).hexdigest()
-                user.uemail = request.form.get('emailnew')
-                user.usafequestion = request.form.get('questionidnew')
-                user.usafeanswer = request.form.get('answernew')
+                user.password = hashlib.sha1(password.encode('utf8')).hexdigest()
+                user.email = request.form.get('emailnew')
+                user.safequestion = request.form.get('questionidnew')
+                user.safeanswer = request.form.get('answernew')
                 user.save_one()
-                print(user.uemail)
-                return render_template('tmppage.html', picture=1, v=url_for('user.person_psdsafe'), i='修改密码成功!',
-                                       title='修改密码成功!', **locals())
+                session.clear()
+                return render_template('login.html', title='登录', **locals())
             else:
                 return render_template('tmppage.html', picture=0, v=url_for('user.person_psdsafe'), i='两次密码输入不一致，请重新输入',
                                        title='修改密码失败!',
@@ -164,11 +160,11 @@ def person_info():
     username = session.get('username')
     user = User.query.filter(User.username == username).first()
     if request.method == 'POST':
-        user.urealname = request.form.get('realname')
-        user.ugender = request.form.get('gender')
-        user.ubirthday = request.form.get('birthday')
-        user.unativeplace = request.form.get('place')
-        user.uqqnum = request.form.get('qq')
+        user.realname = request.form.get('realname')
+        user.gender = request.form.get('gender')
+        user.birthday = request.form.get('birthday')
+        user.nativeplace = request.form.get('place')
+        user.qqnum = request.form.get('qq')
         user.save_one()
         user.setsession()
         return render_template('tmppage.html', picture=1, v=url_for('user.person_info'), i='修改个人信息成功!', **locals())
@@ -183,7 +179,9 @@ def person_signature():
     username = session.get('username')
     user = User.query.filter(User.username == username).first()
     if request.method == 'POST':
-        signaure = request.form.get('content')
+        user.signature = request.form.get('content')
+        user.save_one()
+        user.setsession()
         return render_template('tmppage.html', picture=1, v=url_for('user.person_signature'), i='修改个性签名成功!', **locals())
     else:
         return render_template('home_sign.html', title='个人签名', **locals())
@@ -201,14 +199,14 @@ def person_protrait():
         if photo:
             filename = photos.save(photo)
             img_url = photos.url(filename)
-            user.uphoto = '/static/upload/' + filename
-            session['uphoto'] = user.uphoto
+            user.photo = '/static/upload/' + filename
+            session['uphoto'] = user.photo
             user.save_one()
             return render_template('tmppage.html', picture=1, v=url_for('user.person_protrait'), i='修改头像成功!',
                                    **locals())
         return render_template('tmppage.html', picture=1, v=url_for('user.person_protrait'), i='修改头像失败!请重新尝试',
                                **locals())
-    return render_template('home_tx.html', **locals())
+    return render_template('home_potrait.html', **locals())
 
 
 # 找回密码

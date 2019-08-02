@@ -12,7 +12,7 @@
 <div class="nfl" id="main_message">
     <div class="f_c altw">
         <div id="messagetext" class="alert_info">
-            <p>抱歉，您尚未登录，没有权限在该版块发帖,请先登录</p>
+            <p>抱歉，您尚未登录,请先登录</p>
         </div>
         <div id="messagelogin"></div>
         <div id="main_messaqge_LAPpm">
@@ -21,7 +21,7 @@
                     <em id="returnmessage_LAPpm">用户登录</em>
                     <span></span>
                 </h3>
-                <form method="post" autocomplete="off" name="login" id="loginform_LAPpm" class="cl"action="{{ url_for('user.dologin') }}">
+                <form method="post" autocomplete="off" name="login" id="loginform_LAPpm" class="cl" action="{{ url_for('user.dologin') }}">
                     <div class="c cl">
                         <div class="rfm">
                             <table>
@@ -76,6 +76,29 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="rfm">
+                                        <table>
+                                            <tr>
+                                                <th><span class="rq">*</span><label for="yzm">验证码:</label></th>
+                                                <td>
+                                                    <input style="width:50px;" maxlength="4" type="text"
+                                                           id="yzm" name="yzm" onfocus="checkReg('yzm')" size="25"
+                                                           class="px"/><br/>
+                                                    <em id="emailmore">&nbsp;</em>
+                                                </td>
+                                                <td class="tipcol">
+                                                    <i id="tip_yzm" class="p_tip">
+                                                        <img src="{{ url_for('user.generate_code') }}" id="p_yzm"
+                                                            onclick="this.src='{{ url_for('user.generate_code') }}?'+Math.random()"
+                                                            style="cursor:pointer"/>
+                                                        <a href=" " onclick="this.src='{{ url_for('user.generate_code') }}?'+Math.random()">看不清？
+                                                        {% if error==1 %}验证码输入有误{% endif %}
+                                                        </a>
+                                                    </i>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                         <div class="rfm  bw0">
                             <table>
                                 <tbody>
@@ -111,6 +134,23 @@
         </div>
     </div>
 </div>
+        <script>
+            function checkReg(obj) {
+                document.getElementById('tip_' + obj).style.display = 'block';
+            }
+
+            function checkRegOut(obj, test) {
+                if (document.getElementById(obj).value == '') {
+                    document.getElementById('tip_' + obj).innerHTML = '<b style="color:red;">' + test + '</b>';
+                } else {
+                    document.getElementById('tip_' + obj).style.display = 'none';
+                }
+            }
+
+            function show(obj) {
+                document.getElementById(obj).src = 'verify.php?math=' + Math.random();
+            }
+        </script>
 <!--close END-->
         {% endblock content %}
         {% block footer %}

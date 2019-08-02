@@ -57,7 +57,7 @@
                             </div>
                             <div class="bm_c cl pbn">
                                 <div>
-                                    版主: <span class="xi2">{{ smallc.ccompere }}</span>
+                                    版主: <span class="xi2">{{ smallc.compere }}</span>
                                 </div>
                             </div>
                         </div>
@@ -77,9 +77,9 @@
                                         <th colspan="2">
                                             <div class="tf">
                                                 筛选:
-                                                <a href="http://py.codingfans.cc/list.php?classid=5"
+                                                <a href="{{ url_for('bbs.posts',cid=cid) }}" {% if elite==0%} style="color: #0000cc" {% endif %}
                                                    class="xi2">全部</a><span class="pipe">|</span>
-                                                <a href="http://py.codingfans.cc/list.php?classid=5&amp;elite=1"
+                                                <a href="{{ url_for('bbs.posts',cid=cid,elite=1) }}" {% if elite==1%} style="color: #0000cc" {% endif %}
                                                    class="xi2">精华</a>
                                             </div>
                                         </th>
@@ -91,26 +91,24 @@
                                 </table>
                             </div>
                             <div class="bm_c">
-                                <form method="post" autocomplete="off" name="moderate" id="moderate"
-                                      action="http://py.codingfans.cc/list.php?classid=5">
+                                <form method="post" autocomplete="off" name="moderate" id="moderate" action="">
                                     <table summary="forum_2" id="forum_2" cellspacing="0" cellpadding="0">
                                         <tbody>
                                         {% for post in posts %}
                                             <tr>
                                                 <td class="icn">
-                                                    <a href="{{ url_for('bbs.postdetail',pid=post.pid) }}" title="新窗口打开"
-                                                       target="_blank">
+                                                    <a href="{{ url_for('bbs.postdetail',pid=post.pid) }}" title="新窗口打开" target="_blank">
                                                         <img src="{{ url_for( 'static',filename='images/folder_common.gif') }}"></a>
                                                 </td>
                                                 <th class="common">
                                                     <a href="{{ url_for('bbs.postdetail',pid=post.pid) }}" class="xst"
-                                                       style="color:red">{{ post.ptitle }}</a>
-                                                    <img src="{{ url_for( 'static',filename='images/digest_1.gif') }}"
-                                                         align="absmiddle" alt="digest" title="精华帖">
+                                                       {% if post.pislight==1 %} style="color:red" {% endif %}>{{ post.ptitle }}</a>
+                                                    {% if post.piselite==1 %}
+                                                    <img src="{{ url_for( 'static',filename='images/digest_1.gif') }}" align="absmiddle" alt="digest" title="精华帖">
+                                                    {% endif %}
                                                 </th>
                                                 <td class="by">
-                                                    <cite>{{ post.puser }}</cite>
-
+                                                    <cite>{{ post.postuser }}</cite>
                                                     <em><span class="xi1">{{ moment(post.pposttime).format('YYYY-MM-DD') }}</span></em>
                                                 </td>
                                                 <td class="num">
@@ -118,7 +116,7 @@
                                                     <em>{{ post.phits }}</em></td>
                                                 <td class="by">
                                                     <cite>{{ post.plastreplyuser }}</cite><em>
-                                                    <span title='{{ moment(post.plastreplytime).fromNow() }}'>{{ moment(post.plastreplytime).fromNow() }}</span></em>
+                                                    <span title='{{ moment(post.plastreplytime).fromNow() }}'>{{ moment(post.plastreplytime,local=True).fromNow() }}</span></em>
                                                 </td>
                                             </tr>
                                         {% endfor %}

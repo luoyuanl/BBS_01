@@ -73,22 +73,24 @@
                 </div>
              {% else %}
                 <div class="hdc cl">
-                    <h2><a href="./" title="首页 - 10分钟学院">
+                    <h2><a href="" title="首页 - 10分钟学院">
                         <img src="{{ url_for('static',filename='images/logo.jpg') }}" height='80' border='0'/></a></h2>
                     <div id="um">
                         <div class="avt y">
-                            <a href="home_tx.php">
-                                <img src="{{ session['uphoto'] }}"/></a>
+                            <a href="{{ url_for('user.person_protrait') }}">
+                                <img src="{{ session['photo'] }}"/></a>
                         </div>
                         <p>
-                            <strong class="vwmy"><a href="home.php" target="_blank">{{ session['username'] }}</a></strong>
+                            <strong class="vwmy"><a href="{{ url_for('user.person_info') }}" target="_blank">{{ session['username'] }}</a></strong>
                             <span class="pipe">|</span><a href="{{ url_for('user.person_protrait') }}">设置</a>
+                            {% if session['type']=='管理员' %}
                             <span class="pipe">|</span><a href="" target="_blank">管理中心</a>
+                            {% endif %}
                             <span class="pipe">|</span><a href="{{ url_for('user.user_logout') }}">退出</a>
                         </p>
                         <p>
-                            <a id="extcreditmenu" href="{{ url_for('bbs.index') }}">积分：{{ session['uscore'] }}</a>
-                            <span class="pipe">|</span>用户权限: {{ session['ustatus'] }} </p>
+                            <a id="extcreditmenu" href="{{ url_for('bbs.index') }}">积分：{{ session['score'] }}</a>
+                            <span class="pipe">|</span>用户权限: {{ session['type'] }} </p>
                     </div>
                 </div>
              {% endif %}
